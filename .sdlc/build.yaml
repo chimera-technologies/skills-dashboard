@@ -1,0 +1,18 @@
+# Build and Test settings, read by the sdlc plugin (build-story, the build
+# guard, the verifier, and the Test stage's setup-stack action). The stack is
+# the tech lead's decision in the spec; record it with /sdlc:init stack=<spec>.
+# Commands must not contain '#'.
+
+code_paths: [src/, tests/]     # writes here need the preflight, a story branch and a plan
+test_paths: [tests/]
+
+toolchains: []     # node@<v> python@<v> java@<v> dotnet@<v> go@<v>
+setup_command: 
+install_command: 
+test_command: 
+test_file_command:      # {file} = one test file
+report_path: 
+
+# Token-saving tools the Build preflight installs and wires up (pinned).
+graphify_version: 0.9.71
+ponytail_ref: v4.10.0

@@ -1,0 +1,54 @@
+{
+  "enabledPlugins": {
+    "sdlc@chimera-sdlc": true,
+    "ponytail@ponytail": true,
+    "figma@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "chimera-sdlc": {
+      "source": {
+        "source": "github",
+        "repo": "bala-chimera/sdlc-marketplace",
+        "ref": "v0.15.0"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail",
+        "ref": "v4.10.0"
+      }
+    }
+  },
+  "permissions": {
+    "allow": [
+      "Bash(python3 *validate_*.py*)",
+      "Bash(python *validate_*.py*)",
+      "Bash(python3 *build_preflight.py*)",
+      "Bash(python *build_preflight.py*)",
+      "Bash(python3 *export_screens.py*)",
+      "Bash(python *export_screens.py*)",
+      "Bash(python3 *init_project.py*)",
+      "Bash(python *init_project.py*)",
+      "Bash(graphify *)",
+      "Bash(python -m graphify *)",
+      "Bash(python3 -m graphify *)",
+      "Bash(git checkout -b intent/*)",
+      "Bash(git checkout -b spec/*)",
+      "Bash(git checkout -b design/*)",
+      "Bash(git checkout -b story/*)",
+      "Bash(git checkout -b release/*)",
+      "Bash(git checkout -b sdlc/*)"
+    ],
+    "deny": [
+      "Read(./node_modules/**)",
+      "Read(./.venv/**)",
+      "Read(./target/**)",
+      "Read(./bin/**)",
+      "Read(./obj/**)",
+      "Read(./test-results/**)",
+      "Read(./playwright-report/**)",
+      "Read(./graphify-out/cache/**)"
+    ]
+  }
+}

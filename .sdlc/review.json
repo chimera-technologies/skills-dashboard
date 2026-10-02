@@ -1,0 +1,17 @@
+{
+  "_comment": "PR review stage (before Test). 'gate' decides whether the PR moves on to Test. 'advisory' reviewers post comments and never block. Add a custom reviewer to 'advisory': a plugin skill (marketplace git URL + plugin@marketplace + prompt) or a skill in this repo's .claude/skills/<name>/ (prompt only). {repo} and {pr} are filled in.",
+  "gate": {
+    "skill": "sdlc:review-story",
+    "model": "claude-sonnet-5",
+    "fail_on": "high"
+  },
+  "advisory": [
+    {
+      "name": "code-review",
+      "marketplace": "https://github.com/anthropics/claude-code.git",
+      "plugin": "code-review@claude-code-plugins",
+      "prompt": "/code-review:code-review --comment {repo}/pull/{pr}",
+      "allowed_tools": "mcp__github_inline_comment__create_inline_comment"
+    }
+  ]
+}

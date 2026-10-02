@@ -1,0 +1,11 @@
+# Where the sdlc skills and workflows create and link Jira records.
+# Every accepted spec gets an Epic (the intent's Jira ticket, or one
+# created in space_key when the spec merges) and one Story per S<n>.
+enabled: true
+site: chimeratechnologies-team-tk54z9ne.atlassian.net
+space_key: SCRUM
+epic_issue_type: Epic
+story_issue_type: Story
+# Label on Epics created with an intent. Deliberately NOT "intent": that
+# label starts the Jira Automation intake, which would draft a duplicate.
+created_label: intent-created
