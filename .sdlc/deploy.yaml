@@ -1,0 +1,14 @@
+# Deploy stage, read by /sdlc:release and the release workflow.
+# The cloud and the IaC tool are the architect's decision in the spec;
+# /sdlc:init stack=specs/<slug>.md records them. Commands must not contain '#'.
+version_scheme: semver                 # releases are tagged vMAJOR.MINOR.PATCH
+deploy_command:                        # app deploy per environment (SDLC_ENV set); empty = none
+smoke_command:                         # after each deploy (SMOKE_URL from the environment); failure stops the release
+staging_environment: staging           # GitHub environment deployed automatically; empty = none
+production_plan_environment: production-plan # no reviewers; read-only cloud identity for the production plan
+production_environment: production     # GitHub environment with required reviewers (the release manager)
+cloud: none                            # none, aws, azure or gcp (OIDC login; identity in each environment's variables)
+iac: none                              # none or terraform (plan, then apply the approved plan)
+iac_dir: infra                         # where the IaC lives
+iac_var_file:                          # relative to iac_dir, {env} = staging/production
+iac_backend_config:                    # relative to iac_dir, {env} = staging/production

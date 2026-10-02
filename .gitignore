@@ -1,0 +1,7 @@
+# sdlc plugin: headless run I/O, local graph, local settings
+.sdlc-input/
+.sdlc-output/
+.sdlc-plugin/
+graphify-out/
+.claude/settings.local.json
+.claude/*.graphify-bak

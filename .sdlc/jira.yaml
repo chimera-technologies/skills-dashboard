@@ -1,0 +1,4 @@
+# Jira is off for this project: intents and specs have no Jira record
+# (record_id: none) and no stories are created. Set enabled: true and
+# fill in site and space_key to turn it on.
+enabled: false

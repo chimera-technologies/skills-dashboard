@@ -1,0 +1,25 @@
+{
+  "sdlc_repo": "bala-chimera/sdlc-marketplace",
+  "sdlc_ref": "v0.14.0",
+  "base_branch": "main",
+  "maintain_cron": "17 * * * *",
+  "stages": {
+    "plan": true,
+    "design": true,
+    "ui_design": true,
+    "build": true,
+    "pr_review": true,
+    "test": true,
+    "deploy": true,
+    "maintain": true
+  },
+  "auto_build": true,
+  "workflows": "auto",
+  "models": {
+    "intake": "claude-sonnet-5",
+    "spec": "claude-opus-5-5",
+    "review": "claude-sonnet-5",
+    "build": "claude-opus-5-5",
+    "stack": "claude-sonnet-5"
+  }
+}

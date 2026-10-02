@@ -1,0 +1,10 @@
+{
+  "_comment": "Maintain stage: each check runs on the schedule in sdlc-maintain.yml. A check is a command that exits 0 when healthy, or exits 1 and prints one JSON object (the signal) on a breach. A breach becomes an intent through the intake, deduplicated by fingerprint.",
+  "checks": [],
+  "_example_check": {
+    "name": "api-p95-latency",
+    "source": "maintain",
+    "fingerprint": "api-p95-latency",
+    "command": "python scripts/check_latency.py --band 800"
+  }
+}

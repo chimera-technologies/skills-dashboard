@@ -1,0 +1,12 @@
+# Who approves what. Read by the sdlc skills and validators. Change it
+# through a PR. Roles: product_owner (product-facing intents), service_owner
+# (operational intents), tech_lead (design approval when risk is high and the
+# stack decision), security_owner (security policy exceptions).
+
+default:
+  product_owner: "@bala-chimera"
+  service_owner: "@bala-chimera"
+  tech_lead: "@bala-chimera"
+  security_owner: "@bala-chimera"
+
+components: {}
