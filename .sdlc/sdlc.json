@@ -10,8 +10,8 @@
     "build": true,
     "pr_review": true,
     "test": true,
-    "deploy": true,
-    "maintain": true
+    "deploy": false,
+    "maintain": false
   },
   "auto_build": true,
   "workflows": "auto",

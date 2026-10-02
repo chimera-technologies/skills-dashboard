@@ -13,14 +13,10 @@ on:
       rerun:
         description: "Re-run one step for one merged file"
         type: choice
-        options: [intent-to-spec, spec-to-stories, stack, build, release]
+        options: [intent-to-spec, spec-to-stories, stack, build]
       file:
         description: "intent/<slug>.md, specs/<slug>.md or releases/<version>.md"
         required: true
-      allow_destroy:
-        description: "release: apply an infrastructure plan that destroys or replaces resources (read the plan first)"
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -113,25 +109,3 @@ jobs:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       SDLC_APP_PRIVATE_KEY: ${{ secrets.SDLC_APP_PRIVATE_KEY }}
       JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-
-  release:
-    if: github.event_name == 'push' || inputs.rerun == 'release'
-    permissions:
-      contents: read
-      id-token: write
-    uses: bala-chimera/sdlc-marketplace/.github/workflows/sdlc-release.yml@v0.14.0
-    with:
-      sdlc_ref: v0.14.0
-      sdlc_repo: bala-chimera/sdlc-marketplace
-      app_id: ${{ vars.SDLC_APP_ID }}
-      base_branch: main
-      jira_base_url: ${{ vars.JIRA_BASE_URL }}
-      jira_user_email: ${{ vars.JIRA_USER_EMAIL }}
-      release_file: ${{ inputs.rerun == 'release' && inputs.file || '' }}
-      allow_destroy: ${{ inputs.rerun == 'release' && inputs.allow_destroy || false }}
-    secrets:
-      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      SDLC_APP_PRIVATE_KEY: ${{ secrets.SDLC_APP_PRIVATE_KEY }}
-      JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

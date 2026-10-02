@@ -14,8 +14,6 @@ This repo uses the `sdlc` plugin from `bala-chimera/sdlc-marketplace` at `v0.14.
 | Build | automatic, one story at a time: a plan PR (reviewed for edge cases and bugs), then the build when it merges (`/sdlc:build-story <KEY>` to build by hand) | `plans/<slug>-s<n>.md`, then code and tests in the story PR | owner merges the plan PR; verifier PASS |
 | PR review | story PR opened or pushed | review comment, `review:*` label | `review-gate` passes |
 | Test | after the review gate | test results | `traceability`, `tests` pass; owner merges |
-| Deploy | `/sdlc:release` | `releases/<version>.md`, tag | release PR merged; production approved in its environment |
-| Maintain | scheduled checks in `.sdlc/maintain.json` | new intents | owner triages the intent PR |
 
 - One artifact per PR on its own branch (`intent/`, `spec/`, `design/`,
   `plan/`, `story/`, `release/`; a spec PR also carries its UI mockups);
