@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="sdlc-size" content="1280x800">
+<title>skill-search-results</title>
+<style>
+  :root {
+    --color-text: #1d2522; --color-muted: #55625d; --color-accent: #17715f;
+    --color-accent-soft: #e3f1ed; --color-border: #d9dfdc; --color-surface: #ffffff;
+    --color-page: #f4f6f5; --color-warn: #9a3d0a; --color-warn-soft: #fdf0e6;
+    --color-error: #b3261e; --color-error-soft: #fcebea; --color-focus: #1f5fae;
+    --heat-1: #f1f7f5; --heat-2: #cfe7df; --heat-3: #8fcab7; --heat-4: #2f8f76; --heat-5: #15584a;
+    --space: 8px; --radius: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-page); color: var(--color-text);
+         font: 14px/20px system-ui, "Segoe UI", Arial, sans-serif; }
+  h1, h2, h3 { margin: 0; }
+  h1 { font-size: 22px; line-height: 28px; }
+  h2 { font-size: 16px; line-height: 22px; }
+  .app-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+                display: flex; align-items: center; gap: calc(var(--space) * 3); padding: 0 calc(var(--space) * 3); height: 56px; }
+  .brand { font-weight: 700; font-size: 16px; }
+  nav ul { list-style: none; display: flex; gap: var(--space); margin: 0; padding: 0; }
+  nav a { display: block; padding: 6px 12px; border-radius: var(--radius); color: var(--color-text); text-decoration: none; }
+  nav a[aria-current="page"] { background: var(--color-accent-soft); color: var(--color-accent); font-weight: 600; box-shadow: inset 0 -2px 0 var(--color-accent); }
+  .header-tools { margin-left: auto; display: flex; align-items: center; gap: calc(var(--space) * 1.5); }
+  label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  select, input[type="text"], input[type="number"] { font: inherit; padding: 5px 8px; border: 1px solid #8a9792; border-radius: var(--radius); background: var(--color-surface); color: var(--color-text); }
+  .btn { font: inherit; padding: 6px 12px; border-radius: var(--radius); border: 1px solid var(--color-accent); background: var(--color-surface); color: var(--color-accent); font-weight: 600; cursor: pointer; }
+  .btn-link { border: 0; background: none; color: var(--color-accent); text-decoration: underline; padding: 0; font-weight: 600; font-size: 13px; }
+  :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .filters { display: flex; align-items: center; gap: var(--space); padding: 10px calc(var(--space) * 3); background: var(--color-surface); border-bottom: 1px solid var(--color-border); min-height: 44px; }
+  .filters .label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 4px 2px 10px; border-radius: 999px; background: var(--color-accent-soft); border: 1px solid #b8dacf; font-size: 13px; }
+  .chip .x { border: 0; background: none; font: inherit; font-size: 15px; line-height: 1; padding: 2px 6px; border-radius: 999px; color: var(--color-text); }
+  main { padding: calc(var(--space) * 2.5) calc(var(--space) * 3); }
+  .page-head { display: flex; align-items: baseline; gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 2); }
+  .page-head p { margin: 0; color: var(--color-muted); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: calc(var(--space) * 2); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--color-border); }
+  th { font-size: 12px; color: var(--color-muted); font-weight: 600; }
+  th button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  th .sort { color: var(--color-accent); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .muted { color: var(--color-muted); }
+  a.person { color: var(--color-accent); font-weight: 600; }
+  .lvl { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 22px; border-radius: 4px; font-weight: 700; }
+  .l3 { background: var(--heat-3); color: #102820; }
+  .l4 { background: var(--heat-4); color: #fff; }
+  .l5 { background: var(--heat-5); color: #fff; }
+
+  .search { display: flex; align-items: flex-end; gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 2); }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field input[type="text"] { width: 260px; }
+  .field input[type="number"] { width: 90px; }
+  .field select { min-width: 170px; }
+  .hint { font-size: 12px; color: var(--color-muted); }
+</style>
+</head>
+<body>
+  <header class="app-header">
+    <span class="brand">Skills dashboard</span>
+    <nav aria-label="Screens">
+      <ul>
+        <li><a href="#/">Overview</a></li>
+        <li><a href="#/team/Data%20Platform">Team</a></li>
+        <li><a href="#/skills" aria-current="page">Skill search</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <label for="quarter">Quarter</label>
+      <select id="quarter"><option>2026-Q3 (latest)</option></select>
+      <button class="btn" type="button">Load quarter file</button>
+      <button class="btn" type="button">Load target file</button>
+    </div>
+  </header>
+  <div class="filters" aria-label="Applied filters">
+    <span class="label">Filters:</span>
+    <span class="chip">Team: Data Platform, Payments <button class="x" type="button" aria-label="Remove filter Team">×</button></span>
+    <span class="chip">Role: Senior engineer <button class="x" type="button" aria-label="Remove filter Role">×</button></span>
+    <button class="btn-link" type="button">Clear all</button>
+  </div>
+  <main>
+    <div class="page-head">
+      <h1>Skill search</h1>
+      <p>Find everyone at or above a level for one skill</p>
+    </div>
+
+    <div class="card search" role="search" aria-label="Skill search">
+      <div class="field">
+        <label for="skill">Skill</label>
+        <input id="skill" type="text" value="Kubernetes">
+        <span class="hint">Type to pick from the 40 skills</span>
+      </div>
+      <div class="field">
+        <label for="min">Minimum level</label>
+        <input id="min" type="number" value="3" min="1" max="5">
+        <span class="hint">1 to 5 (default 3)</span>
+      </div>
+      <div class="field">
+        <label for="team">Team</label>
+        <select id="team"><option>Data Platform, Payments</option></select>
+        <span class="hint">&nbsp;</span>
+      </div>
+      <div class="field">
+        <label for="role">Role</label>
+        <select id="role"><option>Senior engineer</option></select>
+        <span class="hint">&nbsp;</span>
+      </div>
+    </div>
+
+    <section class="card" aria-labelledby="res-h">
+      <div class="card-head">
+        <h2 id="res-h">9 people with Kubernetes at level 3 or above</h2>
+        <button class="btn-link" type="button">Download CSV (9 rows, filters applied)</button>
+      </div>
+      <table>
+        <thead><tr>
+          <th scope="col" aria-sort="none"><button type="button">Name ⇅</button></th>
+          <th scope="col">Team</th>
+          <th scope="col">Role</th>
+          <th scope="col" class="num" aria-sort="descending"><button type="button">Level <span class="sort">▼</span></button></th>
+          <th scope="col" class="num">Level in 2026-Q2</th>
+        </tr></thead>
+        <tbody>
+          <tr><td><a class="person" href="#/person/E1063">Chen Wei-Lin</a></td><td>Data Platform</td><td>Senior engineer</td><td class="num"><span class="lvl l5">5</span></td><td class="num">4</td></tr>
+          <tr><td><a class="person" href="#/person/E2211">Olu Adeyemi</a></td><td>Payments</td><td>Senior engineer</td><td class="num"><span class="lvl l5">5</span></td><td class="num">5</td></tr>
+          <tr><td><a class="person" href="#/person/E1102">Greta Lindqvist</a></td><td>Data Platform</td><td>Senior engineer</td><td class="num"><span class="lvl l4">4</span></td><td class="num">4</td></tr>
+          <tr><td><a class="person" href="#/person/E2230">Marta Kowalczyk</a></td><td>Payments</td><td>Senior engineer</td><td class="num"><span class="lvl l4">4</span></td><td class="num">3</td></tr>
+          <tr><td><a class="person" href="#/person/E2244">Sven Aalto</a></td><td>Payments</td><td>Senior engineer</td><td class="num"><span class="lvl l4">4</span></td><td class="num muted">Not rated</td></tr>
+          <tr><td><a class="person" href="#/person/E1042">Amara Okafor</a></td><td>Data Platform</td><td>Senior engineer</td><td class="num"><span class="lvl l3">3</span></td><td class="num">3</td></tr>
+          <tr><td><a class="person" href="#/person/E1136">Jonah Reyes</a></td><td>Data Platform</td><td>Senior engineer</td><td class="num"><span class="lvl l3">3</span></td><td class="num">2</td></tr>
+          <tr><td><a class="person" href="#/person/E2257">Priya Raman</a></td><td>Payments</td><td>Senior engineer</td><td class="num"><span class="lvl l3">3</span></td><td class="num">3</td></tr>
+          <tr><td><a class="person" href="#/person/E2263">Tomás Ibarra</a></td><td>Payments</td><td>Senior engineer</td><td class="num"><span class="lvl l3">3</span></td><td class="num muted">Not in file</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

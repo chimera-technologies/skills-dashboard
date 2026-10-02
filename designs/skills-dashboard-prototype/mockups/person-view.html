@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="sdlc-size" content="1280x800">
+<title>person-view</title>
+<style>
+  :root {
+    --color-text: #1d2522; --color-muted: #55625d; --color-accent: #17715f;
+    --color-accent-soft: #e3f1ed; --color-border: #d9dfdc; --color-surface: #ffffff;
+    --color-page: #f4f6f5; --color-warn: #9a3d0a; --color-warn-soft: #fdf0e6;
+    --color-error: #b3261e; --color-error-soft: #fcebea; --color-focus: #1f5fae;
+    --heat-1: #f1f7f5; --heat-2: #cfe7df; --heat-3: #8fcab7; --heat-4: #2f8f76; --heat-5: #15584a;
+    --space: 8px; --radius: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-page); color: var(--color-text);
+         font: 14px/20px system-ui, "Segoe UI", Arial, sans-serif; }
+  h1, h2, h3 { margin: 0; }
+  h1 { font-size: 22px; line-height: 28px; }
+  h2 { font-size: 16px; line-height: 22px; }
+  .app-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+                display: flex; align-items: center; gap: calc(var(--space) * 3); padding: 0 calc(var(--space) * 3); height: 56px; }
+  .brand { font-weight: 700; font-size: 16px; }
+  nav ul { list-style: none; display: flex; gap: var(--space); margin: 0; padding: 0; }
+  nav a { display: block; padding: 6px 12px; border-radius: var(--radius); color: var(--color-text); text-decoration: none; }
+  .header-tools { margin-left: auto; display: flex; align-items: center; gap: calc(var(--space) * 1.5); }
+  label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  select { font: inherit; padding: 5px 8px; border: 1px solid #8a9792; border-radius: var(--radius); background: var(--color-surface); color: var(--color-text); }
+  .btn { font: inherit; padding: 6px 12px; border-radius: var(--radius); border: 1px solid var(--color-accent); background: var(--color-surface); color: var(--color-accent); font-weight: 600; cursor: pointer; }
+  .btn-link { border: 0; background: none; color: var(--color-accent); text-decoration: underline; padding: 0; font-weight: 600; font-size: 13px; }
+  :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .filters { display: flex; align-items: center; gap: var(--space); padding: 10px calc(var(--space) * 3); background: var(--color-surface); border-bottom: 1px solid var(--color-border); min-height: 44px; }
+  .filters .label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 4px 2px 10px; border-radius: 999px; background: var(--color-accent-soft); border: 1px solid #b8dacf; font-size: 13px; }
+  .chip .x { border: 0; background: none; font: inherit; font-size: 15px; line-height: 1; padding: 2px 6px; border-radius: 999px; color: var(--color-text); }
+  main { padding: calc(var(--space) * 1.5) calc(var(--space) * 3); }
+  .crumb { font-size: 13px; margin-bottom: 6px; }
+  .crumb a { color: var(--color-accent); font-weight: 600; }
+  .page-head { display: flex; align-items: baseline; gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 1.5); }
+  .page-head p { margin: 0; color: var(--color-muted); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: calc(var(--space) * 1.5) calc(var(--space) * 2); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; gap: var(--space); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--color-border); }
+  thead th { font-size: 12px; color: var(--color-muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .muted { color: var(--color-muted); }
+  tr.cat th { background: var(--color-page); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--color-muted); padding-top: 5px; padding-bottom: 5px; }
+  .pos { font-weight: 600; white-space: nowrap; }
+  .pos-above { color: var(--color-accent); }
+  .pos-at { color: var(--color-text); }
+  .pos-below { color: var(--color-warn); }
+  .layout { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--space) * 2); }
+  .right { display: flex; flex-direction: column; gap: calc(var(--space) * 2); }
+  svg text { font: 11px system-ui, "Segoe UI", Arial, sans-serif; fill: var(--color-muted); }
+</style>
+</head>
+<body>
+  <header class="app-header">
+    <span class="brand">Skills dashboard</span>
+    <nav aria-label="Screens">
+      <ul>
+        <li><a href="#/">Overview</a></li>
+        <li><a href="#/team/Data%20Platform">Team</a></li>
+        <li><a href="#/skills">Skill search</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <label for="quarter">Quarter</label>
+      <select id="quarter"><option>2026-Q3 (latest)</option></select>
+      <button class="btn" type="button">Load quarter file</button>
+      <button class="btn" type="button">Load target file</button>
+    </div>
+  </header>
+  <div class="filters" aria-label="Applied filters">
+    <span class="label">Filters:</span>
+    <span class="chip">Category: Engineering, Data, Cloud and platform <button class="x" type="button" aria-label="Remove filter Category">×</button></span>
+    <button class="btn-link" type="button">Clear all</button>
+  </div>
+  <main>
+    <div class="crumb"><a href="#/team/Data%20Platform">← Back to Team: Data Platform</a></div>
+    <div class="page-head">
+      <h1>Esi Mensah</h1>
+      <p>Senior engineer · Data Platform · Employee E1088 · 2026-Q3</p>
+    </div>
+
+    <div class="layout">
+      <section class="card" aria-labelledby="skills-h">
+        <div class="card-head"><h2 id="skills-h">Skills by category</h2><button class="btn-link" type="button">Download CSV</button></div>
+        <table>
+          <thead><tr><th scope="col">Skill</th><th scope="col" class="num">Level</th><th scope="col" class="num">Team target</th><th scope="col">Against target</th></tr></thead>
+          <tbody>
+            <tr class="cat"><th scope="colgroup" colspan="4">Engineering</th></tr>
+            <tr><th scope="row" style="font-weight:400">Python</th><td class="num">4</td><td class="num">3</td><td><span class="pos pos-above">▲ Above target (+1)</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">Git</th><td class="num">4</td><td class="num">3</td><td><span class="pos pos-above">▲ Above target (+1)</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">TypeScript</th><td class="num">3</td><td class="num">3</td><td><span class="pos pos-at">● At target</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">Testing strategy</th><td class="num">3</td><td class="num">3</td><td><span class="pos pos-at">● At target</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">REST API design</th><td class="num">4</td><td class="num">3</td><td><span class="pos pos-above">▲ Above target (+1)</span></td></tr>
+            <tr class="cat"><th scope="colgroup" colspan="4">Data</th></tr>
+            <tr><th scope="row" style="font-weight:400">SQL</th><td class="num">4</td><td class="num">4</td><td><span class="pos pos-at">● At target</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">Data modelling</th><td class="num">3</td><td class="num">3</td><td><span class="pos pos-at">● At target</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">Streaming data</th><td class="num">2</td><td class="num">3</td><td><span class="pos pos-below">▼ Below target (−1)</span></td></tr>
+            <tr class="cat"><th scope="colgroup" colspan="4">Cloud and platform</th></tr>
+            <tr><th scope="row" style="font-weight:400">Kubernetes</th><td class="num">2</td><td class="num muted">No target</td><td class="muted">No team target</td></tr>
+            <tr><th scope="row" style="font-weight:400">Terraform</th><td class="num">1</td><td class="num">2</td><td><span class="pos pos-below">▼ Below target (−1)</span></td></tr>
+            <tr><th scope="row" style="font-weight:400">Observability</th><td class="num muted">Not rated</td><td class="num">2</td><td class="muted">Not rated</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="right">
+        <section class="card" aria-labelledby="trend-h">
+          <div class="card-head">
+            <h2 id="trend-h">Level per quarter</h2>
+            <span><label for="trend-skill">Skill</label> <select id="trend-skill"><option>Data modelling</option></select></span>
+          </div>
+          <svg width="560" height="170" viewBox="0 0 560 170" role="img" aria-labelledby="trend-desc">
+            <title id="trend-desc">Data modelling level per quarter: 2025-Q4 level 2, 2026-Q1 level 2, 2026-Q2 level 3, 2026-Q3 level 3. Team target 3. Same values in the table below.</title>
+            <g stroke="#d9dfdc" stroke-width="1">
+              <line x1="40" y1="20" x2="540" y2="20"/><line x1="40" y1="50" x2="540" y2="50"/><line x1="40" y1="80" x2="540" y2="80"/><line x1="40" y1="110" x2="540" y2="110"/><line x1="40" y1="140" x2="540" y2="140"/>
+            </g>
+            <text x="28" y="24">5</text><text x="28" y="54">4</text><text x="28" y="84">3</text><text x="28" y="114">2</text><text x="28" y="144">1</text>
+            <line x1="40" y1="80" x2="540" y2="80" stroke="#9a3d0a" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="470" y="74" style="fill:#9a3d0a;font-weight:600">Team target 3</text>
+            <polyline points="90,110 223,110 357,80 490,80" fill="none" stroke="#17715f" stroke-width="3"/>
+            <g fill="#17715f"><circle cx="90" cy="110" r="5"/><circle cx="223" cy="110" r="5"/><circle cx="357" cy="80" r="5"/><circle cx="490" cy="80" r="6" stroke="#1d2522" stroke-width="2"/></g>
+            <text x="86" y="102" style="fill:#1d2522;font-weight:700">2</text><text x="219" y="102" style="fill:#1d2522;font-weight:700">2</text><text x="353" y="72" style="fill:#1d2522;font-weight:700">3</text><text x="486" y="100" style="fill:#1d2522;font-weight:700">3</text>
+            <text x="68" y="162">2025-Q4</text><text x="201" y="162">2026-Q1</text><text x="335" y="162">2026-Q2</text><text x="462" y="162" style="font-weight:700;fill:#1d2522">2026-Q3</text>
+          </svg>
+        </section>
+
+        <section class="card" aria-labelledby="hist-h">
+          <div class="card-head"><h2 id="hist-h">Levels per quarter (table)</h2><button class="btn-link" type="button">Download CSV (all loaded quarters)</button></div>
+          <table>
+            <thead><tr><th scope="col">Skill</th><th scope="col" class="num">2025-Q4</th><th scope="col" class="num">2026-Q1</th><th scope="col" class="num">2026-Q2</th><th scope="col" class="num">2026-Q3</th></tr></thead>
+            <tbody>
+              <tr><th scope="row" style="font-weight:400">Team that quarter</th><td class="num muted">Analytics</td><td class="num muted">Data Platform</td><td class="num muted">Data Platform</td><td class="num muted">Data Platform</td></tr>
+              <tr><th scope="row" style="font-weight:600">Data modelling</th><td class="num">2</td><td class="num">2</td><td class="num">3</td><td class="num">3</td></tr>
+              <tr><th scope="row" style="font-weight:400">Python</th><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">4</td></tr>
+              <tr><th scope="row" style="font-weight:400">SQL</th><td class="num">4</td><td class="num">4</td><td class="num">4</td><td class="num">4</td></tr>
+              <tr><th scope="row" style="font-weight:400">Streaming data</th><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">2</td></tr>
+            </tbody>
+          </table>
+          <p class="muted" style="font-size:12px;margin:6px 0 0">Showing 4 of 11 skills · the table scrolls</p>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

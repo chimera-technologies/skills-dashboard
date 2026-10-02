@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="sdlc-size" content="1280x800">
+<title>load-file-errors</title>
+<style>
+  :root {
+    --color-text: #1d2522; --color-muted: #55625d; --color-accent: #17715f;
+    --color-accent-soft: #e3f1ed; --color-border: #d9dfdc; --color-surface: #ffffff;
+    --color-page: #f4f6f5; --color-warn: #9a3d0a; --color-warn-soft: #fdf0e6;
+    --color-error: #b3261e; --color-error-soft: #fcebea; --color-focus: #1f5fae;
+    --heat-1: #f1f7f5; --heat-2: #cfe7df; --heat-3: #8fcab7; --heat-4: #2f8f76; --heat-5: #15584a;
+    --space: 8px; --radius: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-page); color: var(--color-text);
+         font: 14px/20px system-ui, "Segoe UI", Arial, sans-serif; position: relative; height: 800px; overflow: hidden; }
+  h1, h2, h3 { margin: 0; }
+  h1 { font-size: 22px; line-height: 28px; }
+  h2 { font-size: 20px; line-height: 26px; }
+  .app-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+                display: flex; align-items: center; gap: calc(var(--space) * 3); padding: 0 calc(var(--space) * 3); height: 56px; }
+  .brand { font-weight: 700; font-size: 16px; }
+  nav ul { list-style: none; display: flex; gap: var(--space); margin: 0; padding: 0; }
+  nav a { display: block; padding: 6px 12px; border-radius: var(--radius); color: var(--color-text); text-decoration: none; }
+  nav a[aria-current="page"] { background: var(--color-accent-soft); color: var(--color-accent); font-weight: 600; box-shadow: inset 0 -2px 0 var(--color-accent); }
+  .header-tools { margin-left: auto; display: flex; align-items: center; gap: calc(var(--space) * 1.5); }
+  label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  select { font: inherit; padding: 5px 8px; border: 1px solid #8a9792; border-radius: var(--radius); background: var(--color-surface); color: var(--color-text); }
+  .btn { font: inherit; padding: 6px 12px; border-radius: var(--radius); border: 1px solid var(--color-accent); background: var(--color-surface); color: var(--color-accent); font-weight: 600; cursor: pointer; }
+  .btn-primary { background: var(--color-accent); color: #fff; }
+  .btn-link { border: 0; background: none; color: var(--color-accent); text-decoration: underline; padding: 0; font-weight: 600; font-size: 13px; }
+  :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .focus-ring { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .filters { display: flex; align-items: center; gap: var(--space); padding: 10px calc(var(--space) * 3); background: var(--color-surface); border-bottom: 1px solid var(--color-border); min-height: 44px; }
+  .filters .label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  .none { color: var(--color-muted); font-size: 13px; }
+  main { padding: calc(var(--space) * 2.5) calc(var(--space) * 3); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: calc(var(--space) * 2); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+  .stat .k { color: var(--color-muted); font-size: 13px; font-weight: 600; }
+  .stat .v { font-size: 28px; line-height: 36px; font-weight: 700; }
+  .placeholder { height: 380px; }
+
+  .backdrop { position: absolute; inset: 0; background: rgba(29, 37, 34, .55); }
+  dialog { position: absolute; top: 72px; left: 50%; transform: translateX(-50%); margin: 0; width: 760px;
+           border: 0; border-radius: 8px; padding: 0; background: var(--color-surface); color: var(--color-text);
+           box-shadow: 0 12px 32px rgba(0,0,0,.25); }
+  .dlg-head { display: flex; gap: 12px; padding: 20px 24px 12px; border-bottom: 1px solid var(--color-border); border-top: 6px solid var(--color-error); border-radius: 8px 8px 0 0; }
+  .icon { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--color-error); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .dlg-head p { margin: 4px 0 0; color: var(--color-text); }
+  .dlg-body { padding: 14px 24px; }
+  .summary { background: var(--color-error-soft); border: 1px solid #efb8b4; border-radius: var(--radius); padding: 8px 12px; margin-bottom: 12px; font-size: 13px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  caption { text-align: left; font-weight: 600; padding-bottom: 6px; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--color-border); vertical-align: top; }
+  thead th { font-size: 12px; color: var(--color-muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; width: 70px; }
+  code { font: 12px/18px ui-monospace, Consolas, monospace; background: var(--color-page); padding: 1px 4px; border-radius: 3px; }
+  .list { max-height: 310px; overflow: hidden; border-bottom: 1px dashed var(--color-border); }
+  .dlg-foot { display: flex; align-items: center; gap: 12px; padding: 12px 24px 20px; }
+  .dlg-foot .muted { color: var(--color-muted); font-size: 13px; margin-right: auto; }
+</style>
+</head>
+<body>
+  <div aria-hidden="true">
+    <header class="app-header">
+      <span class="brand">Skills dashboard</span>
+      <nav aria-label="Screens">
+        <ul>
+          <li><a href="#/" aria-current="page">Overview</a></li>
+          <li><a href="#/team/Data%20Platform">Team</a></li>
+          <li><a href="#/skills">Skill search</a></li>
+        </ul>
+      </nav>
+      <div class="header-tools">
+        <label for="quarter">Quarter</label>
+        <select id="quarter"><option>2026-Q3 (latest)</option></select>
+        <button class="btn" type="button">Load quarter file</button>
+        <button class="btn" type="button">Load target file</button>
+      </div>
+    </header>
+    <div class="filters"><span class="label">Filters:</span><span class="none">No filters applied</span></div>
+    <main>
+      <h1>Organisation overview</h1>
+      <div class="stats">
+        <div class="card stat"><div class="k">People</div><div class="v">302</div></div>
+        <div class="card stat"><div class="k">Teams</div><div class="v">12</div></div>
+        <div class="card stat"><div class="k">Skills assessed</div><div class="v">40</div></div>
+        <div class="card stat"><div class="k">Average level</div><div class="v">2.9</div></div>
+      </div>
+      <div class="card placeholder"></div>
+    </main>
+  </div>
+  <div class="backdrop"></div>
+
+  <dialog open aria-labelledby="err-title" aria-describedby="err-desc">
+    <div class="dlg-head">
+      <span class="icon" aria-hidden="true">!</span>
+      <div>
+        <h2 id="err-title">skills-2026-Q4.csv was not loaded</h2>
+        <p id="err-desc">7 rows have problems. Nothing was loaded and the data on screen has not changed. Fix the rows in the file and load it again.</p>
+      </div>
+    </div>
+    <div class="dlg-body">
+      <div class="summary"><strong>File checked:</strong> 11,842 rows · 7 rows with problems · file kept in this browser only, not uploaded or saved</div>
+      <div class="list">
+        <table>
+          <caption>Rows with problems</caption>
+          <thead><tr><th scope="col" class="num">Row</th><th scope="col">Column</th><th scope="col">Reason</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><code>category</code></td><td>Missing column: the header has no <code>category</code> column</td></tr>
+            <tr><td class="num">48</td><td><code>level</code></td><td>Level must be a whole number from 1 to 5 (found "3.5")</td></tr>
+            <tr><td class="num">212</td><td><code>skill</code></td><td>Unknown skill (not in the list of 40 skills)</td></tr>
+            <tr><td class="num">1,407</td><td><code>team</code></td><td>Unknown team (not in the list of 12 teams)</td></tr>
+            <tr><td class="num">3,090</td><td><code>quarter</code></td><td>Mixed quarters: this row is 2026-Q3, the file is 2026-Q4</td></tr>
+            <tr><td class="num">6,551</td><td><code>employee_id</code></td><td>Missing required value</td></tr>
+            <tr><td class="num">9,318</td><td>—</td><td>Duplicate row: same employee, skill and quarter as row 9,301</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="dlg-foot">
+      <span class="muted">Messages give the row number and reason, never the person's name.</span>
+      <button class="btn" type="button">Download problem list (CSV)</button>
+      <button class="btn btn-primary focus-ring" type="button">Close</button>
+    </div>
+  </dialog>
+</body>
+</html>
