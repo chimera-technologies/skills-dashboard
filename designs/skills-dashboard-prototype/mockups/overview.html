@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="sdlc-size" content="1280x800">
+<title>overview</title>
+<style>
+  :root {
+    --color-text: #1d2522; --color-muted: #55625d; --color-accent: #17715f;
+    --color-accent-soft: #e3f1ed; --color-border: #d9dfdc; --color-surface: #ffffff;
+    --color-page: #f4f6f5; --color-warn: #9a3d0a; --color-warn-soft: #fdf0e6;
+    --color-error: #b3261e; --color-error-soft: #fcebea; --color-focus: #1f5fae;
+    --heat-1: #f1f7f5; --heat-2: #cfe7df; --heat-3: #8fcab7; --heat-4: #2f8f76; --heat-5: #15584a;
+    --space: 8px; --radius: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-page); color: var(--color-text);
+         font: 14px/20px system-ui, "Segoe UI", Arial, sans-serif; }
+  h1, h2, h3 { margin: 0; }
+  h1 { font-size: 22px; line-height: 28px; }
+  h2 { font-size: 16px; line-height: 22px; }
+  .app-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+                display: flex; align-items: center; gap: calc(var(--space) * 3); padding: 0 calc(var(--space) * 3); height: 56px; }
+  .brand { font-weight: 700; font-size: 16px; }
+  nav ul { list-style: none; display: flex; gap: var(--space); margin: 0; padding: 0; }
+  nav a { display: block; padding: 6px 12px; border-radius: var(--radius); color: var(--color-text); text-decoration: none; }
+  nav a[aria-current="page"] { background: var(--color-accent-soft); color: var(--color-accent); font-weight: 600; box-shadow: inset 0 -2px 0 var(--color-accent); }
+  .header-tools { margin-left: auto; display: flex; align-items: center; gap: calc(var(--space) * 1.5); }
+  label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  select, input[type="text"], input[type="number"] { font: inherit; padding: 5px 8px; border: 1px solid #8a9792; border-radius: var(--radius); background: var(--color-surface); color: var(--color-text); }
+  .btn { font: inherit; padding: 6px 12px; border-radius: var(--radius); border: 1px solid var(--color-accent); background: var(--color-surface); color: var(--color-accent); font-weight: 600; cursor: pointer; }
+  .btn-primary { background: var(--color-accent); color: #fff; }
+  .btn-link { border: 0; background: none; color: var(--color-accent); text-decoration: underline; padding: 0; font-weight: 600; }
+  .focus-ring { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .filters { display: flex; align-items: center; gap: var(--space); padding: 10px calc(var(--space) * 3); background: var(--color-surface); border-bottom: 1px solid var(--color-border); min-height: 44px; }
+  .filters .label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 4px 2px 10px; border-radius: 999px; background: var(--color-accent-soft); border: 1px solid #b8dacf; font-size: 13px; }
+  .chip .x { border: 0; background: none; font: inherit; font-size: 15px; line-height: 1; padding: 2px 6px; border-radius: 999px; color: var(--color-text); }
+  .none { color: var(--color-muted); font-size: 13px; }
+  main { padding: calc(var(--space) * 2.5) calc(var(--space) * 3); }
+  .page-head { display: flex; align-items: baseline; gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 2); }
+  .page-head p { margin: 0; color: var(--color-muted); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: calc(var(--space) * 2); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  caption { text-align: left; font-weight: 600; padding-bottom: 6px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--color-border); }
+  th { font-size: 12px; color: var(--color-muted); font-weight: 600; white-space: nowrap; }
+  th .sort { color: var(--color-accent); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .up { color: var(--color-accent); font-weight: 600; }
+  .down { color: var(--color-warn); font-weight: 600; }
+  .flat { color: var(--color-muted); }
+  .muted { color: var(--color-muted); }
+  a.person { color: var(--color-accent); font-weight: 600; }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .badge-warn { background: var(--color-warn-soft); color: var(--color-warn); border: 1px solid #f0c4a4; }
+  .badge-ok { background: var(--color-accent-soft); color: var(--color-accent); border: 1px solid #b8dacf; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 2); }
+  .stat .k { color: var(--color-muted); font-size: 13px; font-weight: 600; }
+  .stat .v { font-size: 28px; line-height: 36px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .stat .d { font-size: 13px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: calc(var(--space) * 2); }
+  .bar { display: inline-block; height: 10px; background: var(--color-accent); border-radius: 2px; vertical-align: middle; }
+  .bar.low { background: var(--color-warn); }
+</style>
+</head>
+<body>
+  <header class="app-header">
+    <span class="brand">Skills dashboard</span>
+    <nav aria-label="Screens">
+      <ul>
+        <li><a href="#/" aria-current="page">Overview</a></li>
+        <li><a href="#/team/Data%20Platform">Team</a></li>
+        <li><a href="#/skills">Skill search</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <label for="quarter">Quarter</label>
+      <select id="quarter"><option>2026-Q3 (latest)</option><option>2026-Q2</option><option>2026-Q1</option><option>2025-Q4</option></select>
+      <button class="btn" type="button">Load quarter file</button>
+      <button class="btn" type="button">Load target file</button>
+    </div>
+  </header>
+  <div class="filters" aria-label="Applied filters">
+    <span class="label">Filters:</span>
+    <span class="none">No filters applied</span>
+  </div>
+  <main>
+    <div class="page-head">
+      <h1>Organisation overview</h1>
+      <p>2026-Q3, compared with 2026-Q2 · Sample data (fictional)</p>
+    </div>
+
+    <section class="stats" aria-label="Headline numbers">
+      <div class="card stat"><div class="k">People</div><div class="v">302</div><div class="d muted">+4 since 2026-Q2</div></div>
+      <div class="card stat"><div class="k">Teams</div><div class="v">12</div><div class="d muted">Unchanged</div></div>
+      <div class="card stat"><div class="k">Skills assessed</div><div class="v">40</div><div class="d muted">5 categories</div></div>
+      <div class="card stat"><div class="k">Average level</div><div class="v">2.9</div><div class="d"><span class="up">▲ Up 0.1</span> <span class="muted">from 2.8</span></div></div>
+    </section>
+
+    <div class="grid3">
+      <section class="card" aria-labelledby="top-h">
+        <div class="card-head"><h2 id="top-h">Top 10 skills</h2><button class="btn-link" type="button">Download CSV</button></div>
+        <table>
+          <thead><tr><th scope="col">#</th><th scope="col">Skill</th><th scope="col" class="num">Avg level <span class="sort" aria-label="sorted descending">▼</span></th><th scope="col"><span class="muted">Bar</span></th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>SQL</td><td class="num">3.8</td><td><span class="bar" style="width:76px"></span></td></tr>
+            <tr><td>2</td><td>Git</td><td class="num">3.7</td><td><span class="bar" style="width:74px"></span></td></tr>
+            <tr><td>3</td><td>Agile delivery</td><td class="num">3.6</td><td><span class="bar" style="width:72px"></span></td></tr>
+            <tr><td>4</td><td>Python</td><td class="num">3.5</td><td><span class="bar" style="width:70px"></span></td></tr>
+            <tr><td>5</td><td>Stakeholder management</td><td class="num">3.4</td><td><span class="bar" style="width:68px"></span></td></tr>
+            <tr><td>6</td><td>Data modelling</td><td class="num">3.3</td><td><span class="bar" style="width:66px"></span></td></tr>
+            <tr><td>7</td><td>REST API design</td><td class="num">3.3</td><td><span class="bar" style="width:66px"></span></td></tr>
+            <tr><td>8</td><td>Testing strategy</td><td class="num">3.2</td><td><span class="bar" style="width:64px"></span></td></tr>
+            <tr><td>9</td><td>TypeScript</td><td class="num">3.2</td><td><span class="bar" style="width:64px"></span></td></tr>
+            <tr><td>10</td><td>Workshop facilitation</td><td class="num">3.1</td><td><span class="bar" style="width:62px"></span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card" aria-labelledby="bottom-h">
+        <div class="card-head"><h2 id="bottom-h">Bottom 10 skills</h2><button class="btn-link" type="button">Download CSV</button></div>
+        <table>
+          <thead><tr><th scope="col">#</th><th scope="col">Skill</th><th scope="col" class="num">Avg level <span class="sort" aria-label="sorted ascending">▲</span></th><th scope="col"><span class="muted">Bar</span></th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Rust</td><td class="num">1.6</td><td><span class="bar low" style="width:32px"></span></td></tr>
+            <tr><td>2</td><td>Machine learning ops</td><td class="num">1.8</td><td><span class="bar low" style="width:36px"></span></td></tr>
+            <tr><td>3</td><td>Kubernetes</td><td class="num">1.9</td><td><span class="bar low" style="width:38px"></span></td></tr>
+            <tr><td>4</td><td>Threat modelling</td><td class="num">2.0</td><td><span class="bar low" style="width:40px"></span></td></tr>
+            <tr><td>5</td><td>Terraform</td><td class="num">2.1</td><td><span class="bar low" style="width:42px"></span></td></tr>
+            <tr><td>6</td><td>Accessibility testing</td><td class="num">2.2</td><td><span class="bar low" style="width:44px"></span></td></tr>
+            <tr><td>7</td><td>Streaming data</td><td class="num">2.2</td><td><span class="bar low" style="width:44px"></span></td></tr>
+            <tr><td>8</td><td>Pricing and bids</td><td class="num">2.3</td><td><span class="bar low" style="width:46px"></span></td></tr>
+            <tr><td>9</td><td>Observability</td><td class="num">2.4</td><td><span class="bar low" style="width:48px"></span></td></tr>
+            <tr><td>10</td><td>Go</td><td class="num">2.4</td><td><span class="bar low" style="width:48px"></span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card" aria-labelledby="cat-h">
+        <div class="card-head"><h2 id="cat-h">Average per category</h2><button class="btn-link" type="button">Download CSV</button></div>
+        <table>
+          <caption class="muted">2026-Q3 against 2026-Q2</caption>
+          <thead><tr><th scope="col">Category</th><th scope="col" class="num">2026-Q3</th><th scope="col" class="num">2026-Q2</th><th scope="col">Change</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Engineering</th><td class="num">3.1</td><td class="num">2.9</td><td><span class="up">▲ Up 0.2</span></td></tr>
+            <tr><th scope="row">Data</th><td class="num">3.0</td><td class="num">3.0</td><td><span class="flat">● Unchanged</span></td></tr>
+            <tr><th scope="row">Cloud and platform</th><td class="num">2.3</td><td class="num">2.4</td><td><span class="down">▼ Down 0.1</span></td></tr>
+            <tr><th scope="row">Delivery</th><td class="num">3.2</td><td class="num">3.1</td><td><span class="up">▲ Up 0.1</span></td></tr>
+            <tr><th scope="row">Consulting</th><td class="num">2.8</td><td class="num">2.6</td><td><span class="up">▲ Up 0.2</span></td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="font-size:12px;margin:10px 0 0">Change is shown only when both quarters have at least 3 ratings; otherwise it reads "Not enough data". Unrated skills are left out, not counted as zero.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

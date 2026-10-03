@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="sdlc-size" content="1280x800">
+<title>team-view</title>
+<style>
+  :root {
+    --color-text: #1d2522; --color-muted: #55625d; --color-accent: #17715f;
+    --color-accent-soft: #e3f1ed; --color-border: #d9dfdc; --color-surface: #ffffff;
+    --color-page: #f4f6f5; --color-warn: #9a3d0a; --color-warn-soft: #fdf0e6;
+    --color-error: #b3261e; --color-error-soft: #fcebea; --color-focus: #1f5fae;
+    --heat-1: #f1f7f5; --heat-2: #cfe7df; --heat-3: #8fcab7; --heat-4: #2f8f76; --heat-5: #15584a;
+    --space: 8px; --radius: 6px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--color-page); color: var(--color-text);
+         font: 14px/20px system-ui, "Segoe UI", Arial, sans-serif; }
+  h1, h2, h3 { margin: 0; }
+  h1 { font-size: 22px; line-height: 28px; }
+  h2 { font-size: 16px; line-height: 22px; }
+  .app-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+                display: flex; align-items: center; gap: calc(var(--space) * 3); padding: 0 calc(var(--space) * 3); height: 56px; }
+  .brand { font-weight: 700; font-size: 16px; }
+  nav ul { list-style: none; display: flex; gap: var(--space); margin: 0; padding: 0; }
+  nav a { display: block; padding: 6px 12px; border-radius: var(--radius); color: var(--color-text); text-decoration: none; }
+  nav a[aria-current="page"] { background: var(--color-accent-soft); color: var(--color-accent); font-weight: 600; box-shadow: inset 0 -2px 0 var(--color-accent); }
+  .header-tools { margin-left: auto; display: flex; align-items: center; gap: calc(var(--space) * 1.5); }
+  label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  select, input[type="text"], input[type="number"] { font: inherit; padding: 5px 8px; border: 1px solid #8a9792; border-radius: var(--radius); background: var(--color-surface); color: var(--color-text); }
+  .btn { font: inherit; padding: 6px 12px; border-radius: var(--radius); border: 1px solid var(--color-accent); background: var(--color-surface); color: var(--color-accent); font-weight: 600; cursor: pointer; }
+  .btn-primary { background: var(--color-accent); color: #fff; }
+  .btn-link { border: 0; background: none; color: var(--color-accent); text-decoration: underline; padding: 0; font-weight: 600; font-size: 13px; }
+  :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+  .filters { display: flex; align-items: center; gap: var(--space); padding: 10px calc(var(--space) * 3); background: var(--color-surface); border-bottom: 1px solid var(--color-border); min-height: 44px; }
+  .filters .label { font-size: 13px; color: var(--color-muted); font-weight: 600; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 4px 2px 10px; border-radius: 999px; background: var(--color-accent-soft); border: 1px solid #b8dacf; font-size: 13px; }
+  .chip .x { border: 0; background: none; font: inherit; font-size: 15px; line-height: 1; padding: 2px 6px; border-radius: 999px; color: var(--color-text); }
+  main { padding: calc(var(--space) * 2) calc(var(--space) * 3); }
+  .page-head { display: flex; align-items: center; gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 1.5); }
+  .page-head p { margin: 0; color: var(--color-muted); }
+  .page-head .controls { margin-left: auto; display: flex; gap: var(--space); align-items: center; }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: calc(var(--space) * 1.5) calc(var(--space) * 2); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; gap: var(--space); }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--color-border); }
+  th { font-size: 12px; color: var(--color-muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .up { color: var(--color-accent); font-weight: 600; }
+  .down { color: var(--color-warn); font-weight: 600; }
+  .flat { color: var(--color-muted); }
+  .muted { color: var(--color-muted); }
+  a.person { color: var(--color-accent); font-weight: 600; }
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .badge-warn { background: var(--color-warn-soft); color: var(--color-warn); border: 1px solid #f0c4a4; }
+  .badge-ok { background: var(--color-accent-soft); color: var(--color-accent); border: 1px solid #b8dacf; }
+
+  .layout { display: grid; grid-template-columns: 1fr 470px; gap: calc(var(--space) * 2); }
+  .heat { table-layout: fixed; }
+  .heat th, .heat td { border: 1px solid #fff; padding: 0; }
+  .heat thead th { vertical-align: bottom; text-align: center; padding: 4px 2px; font-size: 11px; line-height: 13px; height: 44px; }
+  .heat tbody th { padding: 0 8px; height: 30px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; color: var(--color-text); font-weight: 400; border-bottom: 1px solid var(--color-border); }
+  .heat td { text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; height: 30px; }
+  .l1 { background: var(--heat-1); color: var(--color-text); }
+  .l2 { background: var(--heat-2); color: var(--color-text); }
+  .l3 { background: var(--heat-3); color: #102820; }
+  .l4 { background: var(--heat-4); color: #fff; }
+  .l5 { background: var(--heat-5); color: #fff; }
+  .l0 { background: repeating-linear-gradient(45deg, #fafbfb, #fafbfb 4px, #eef1f0 4px, #eef1f0 8px); color: var(--color-muted); font-weight: 400; }
+  .heat td.focused { outline: 3px solid var(--color-focus); outline-offset: -3px; }
+  .tooltip { position: absolute; background: var(--color-text); color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 4px; white-space: nowrap; }
+  .legend { display: flex; gap: 10px; align-items: center; font-size: 12px; color: var(--color-muted); margin-top: 8px; }
+  .legend .sw { display: inline-flex; width: 22px; height: 18px; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; border-radius: 3px; }
+  .scroll { height: 382px; overflow: hidden; border-bottom: 1px dashed var(--color-border); position: relative; }
+  tr.gap td, tr.gap th { background: var(--color-warn-soft); }
+  tr.gap th { box-shadow: inset 4px 0 0 var(--color-warn); }
+</style>
+</head>
+<body>
+  <header class="app-header">
+    <span class="brand">Skills dashboard</span>
+    <nav aria-label="Screens">
+      <ul>
+        <li><a href="#/">Overview</a></li>
+        <li><a href="#/team/Data%20Platform" aria-current="page">Team</a></li>
+        <li><a href="#/skills">Skill search</a></li>
+      </ul>
+    </nav>
+    <div class="header-tools">
+      <label for="quarter">Quarter</label>
+      <select id="quarter"><option>2026-Q3 (latest)</option></select>
+      <button class="btn" type="button">Load quarter file</button>
+      <button class="btn" type="button">Load target file</button>
+    </div>
+  </header>
+  <div class="filters" aria-label="Applied filters">
+    <span class="label">Filters:</span>
+    <span class="chip">Category: Engineering, Data <button class="x" type="button" aria-label="Remove filter Category">×</button></span>
+    <button class="btn-link" type="button">Clear all</button>
+  </div>
+  <main>
+    <div class="page-head">
+      <h1>Team: Data Platform</h1>
+      <p>24 people in 2026-Q3 · compared with 2026-Q2</p>
+      <div class="controls">
+        <label for="team">Team</label>
+        <select id="team"><option>Data Platform</option></select>
+        <label for="cat">Category</label>
+        <select id="cat"><option>Engineering, Data</option></select>
+      </div>
+    </div>
+
+    <div class="layout">
+      <section class="card" aria-labelledby="heat-h">
+        <div class="card-head">
+          <h2 id="heat-h">Skill levels by person</h2>
+          <span class="muted" style="font-size:12px">Rows 1–11 of 24 · table scrolls · arrow keys move between cells</span>
+          <button class="btn-link" type="button">Download CSV</button>
+        </div>
+        <div class="scroll">
+        <table class="heat">
+          <caption class="muted" style="text-align:left;font-size:12px;padding-bottom:4px">Level 1–5 per person and skill; "–" means not rated. Select a name to open the person view.</caption>
+          <colgroup><col style="width:150px"><col span="8"></colgroup>
+          <thead><tr>
+            <th scope="col" style="text-align:left">Person</th>
+            <th scope="col">Python</th><th scope="col">SQL</th><th scope="col">Data modelling</th><th scope="col">Streaming data</th>
+            <th scope="col">Git</th><th scope="col">TypeScript</th><th scope="col">Testing strategy</th><th scope="col">REST API design</th>
+          </tr></thead>
+          <tbody>
+            <tr><th scope="row"><a class="person" href="#/person/E1042">Amara Okafor</a></th><td class="l4">4</td><td class="l5">5</td><td class="l4">4</td><td class="l2">2</td><td class="l4">4</td><td class="l2">2</td><td class="l3">3</td><td class="l3">3</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1057">Bruno Castell</a></th><td class="l3">3</td><td class="l4">4</td><td class="l3">3</td><td class="l1">1</td><td class="l3">3</td><td class="l0">–</td><td class="l2">2</td><td class="l3">3</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1063">Chen Wei-Lin</a></th><td class="l5">5</td><td class="l4">4</td><td class="l4">4</td><td class="l3">3</td><td class="l5">5</td><td class="l3">3</td><td class="l4">4</td><td class="l4">4</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1071">Dana Mirov</a></th><td class="l2">2</td><td class="l3">3</td><td class="l2">2</td><td class="l1">1</td><td class="l3">3</td><td class="l1">1</td><td class="l2">2</td><td class="l2">2</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1088">Esi Mensah</a></th><td class="l4">4</td><td class="l4">4</td><td class="l3 focused" aria-label="Esi Mensah, Data modelling, level 3">3</td><td class="l2">2</td><td class="l4">4</td><td class="l3">3</td><td class="l3">3</td><td class="l4">4</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1094">Farid Haddad</a></th><td class="l3">3</td><td class="l3">3</td><td class="l2">2</td><td class="l0">–</td><td class="l3">3</td><td class="l2">2</td><td class="l2">2</td><td class="l3">3</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1102">Greta Lindqvist</a></th><td class="l4">4</td><td class="l5">5</td><td class="l5">5</td><td class="l3">3</td><td class="l4">4</td><td class="l2">2</td><td class="l3">3</td><td class="l3">3</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1115">Hiro Tanaka</a></th><td class="l2">2</td><td class="l3">3</td><td class="l2">2</td><td class="l1">1</td><td class="l4">4</td><td class="l4">4</td><td class="l3">3</td><td class="l3">3</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1121">Ines Duarte</a></th><td class="l3">3</td><td class="l4">4</td><td class="l3">3</td><td class="l2">2</td><td class="l3">3</td><td class="l0">–</td><td class="l2">2</td><td class="l2">2</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1136">Jonah Reyes</a></th><td class="l4">4</td><td class="l4">4</td><td class="l3">3</td><td class="l2">2</td><td class="l5">5</td><td class="l3">3</td><td class="l4">4</td><td class="l3">3</td></tr>
+            <tr><th scope="row"><a class="person" href="#/person/E1140">Kavya Nair</a></th><td class="l3">3</td><td class="l3">3</td><td class="l2">2</td><td class="l1">1</td><td class="l3">3</td><td class="l2">2</td><td class="l2">2</td><td class="l2">2</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="legend" aria-hidden="true">Level:
+          <span class="sw l1">1</span><span class="sw l2">2</span><span class="sw l3">3</span><span class="sw l4">4</span><span class="sw l5">5</span>
+          <span class="sw l0">–</span> not rated · every cell shows its number
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="gaps-h">
+        <div class="card-head"><h2 id="gaps-h">Gaps against target</h2><button class="btn-link" type="button">Download CSV</button></div>
+        <table>
+          <caption class="muted" style="text-align:left;font-size:12px;padding-bottom:4px">A skill meets target when at least 50% of rated members are at or above it.</caption>
+          <thead><tr><th scope="col">Skill</th><th scope="col" class="num">Target</th><th scope="col" class="num">At or above</th><th scope="col" class="num">Shortfall</th><th scope="col">Status</th><th scope="col">Change</th></tr></thead>
+          <tbody>
+            <tr class="gap"><th scope="row">Streaming data</th><td class="num">3</td><td class="num">4 of 22</td><td class="num">18</td><td><span class="badge badge-warn">⚠ Below target</span></td><td><span class="up">▲ 0.2</span></td></tr>
+            <tr class="gap"><th scope="row">TypeScript</th><td class="num">3</td><td class="num">8 of 21</td><td class="num">13</td><td><span class="badge badge-warn">⚠ Below target</span></td><td><span class="flat">● 0.0</span></td></tr>
+            <tr class="gap"><th scope="row">Testing strategy</th><td class="num">3</td><td class="num">11 of 24</td><td class="num">13</td><td><span class="badge badge-warn">⚠ Below target</span></td><td><span class="down">▼ 0.1</span></td></tr>
+            <tr><th scope="row">Data modelling</th><td class="num">3</td><td class="num">14 of 24</td><td class="num">10</td><td><span class="badge badge-ok">✓ Meets</span></td><td><span class="up">▲ 0.3</span></td></tr>
+            <tr><th scope="row">REST API design</th><td class="num">3</td><td class="num">15 of 24</td><td class="num">9</td><td><span class="badge badge-ok">✓ Meets</span></td><td><span class="flat">● 0.0</span></td></tr>
+            <tr><th scope="row">Python</th><td class="num">3</td><td class="num">19 of 24</td><td class="num">5</td><td><span class="badge badge-ok">✓ Meets</span></td><td><span class="up">▲ 0.1</span></td></tr>
+            <tr><th scope="row">Git</th><td class="num">3</td><td class="num">22 of 24</td><td class="num">2</td><td><span class="badge badge-ok">✓ Meets</span></td><td><span class="up">▲ 0.1</span></td></tr>
+            <tr><th scope="row">SQL</th><td class="num">4</td><td class="num">12 of 24</td><td class="num">12</td><td><span class="badge badge-ok">✓ Meets</span></td><td class="muted">Not enough data</td></tr>
+          </tbody>
+        </table>
+        <p class="muted" style="font-size:12px;margin:8px 0 0">Shortfall = members below target. Change = team average since 2026-Q2. Skills without a target are not listed.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
