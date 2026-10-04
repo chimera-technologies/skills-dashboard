@@ -5,3 +5,11 @@
 graphify-out/
 .claude/settings.local.json
 .claude/*.graphify-bak
+
+# app build and test output
+node_modules/
+dist/
+test-results/
+playwright-report/
+blob-report/
+.screenshots/
