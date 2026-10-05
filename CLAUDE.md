@@ -3,7 +3,7 @@
 <!-- sdlc:begin -->
 ## SDLC loop (sdlc plugin)
 
-This repo uses the `sdlc` plugin from `bala-chimera/sdlc-marketplace` at `v0.16.3`
+This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at `v0.17.0`
 (set up with `/sdlc:init`; this block is regenerated, edit outside it).
 
 | Stage | Starts with | Produces | Gate |

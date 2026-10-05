@@ -8,8 +8,8 @@
     "chimera-sdlc": {
       "source": {
         "source": "github",
-        "repo": "bala-chimera/sdlc-marketplace",
-        "ref": "v0.16.3"
+        "repo": "chimera-technologies/sdlc-marketplace",
+        "ref": "v0.17.0"
       }
     },
     "ponytail": {
