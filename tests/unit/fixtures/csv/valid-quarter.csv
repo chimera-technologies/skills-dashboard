@@ -1,0 +1,6 @@
+employee_id,name,team,role,skill,category,level,quarter,
+E0001, Zoë Ñúñez ,Data Platform,"Consultant, Data",Python,Development,4,2026-Q3
+E0001, Zoë Ñúñez ,Data Platform,"Consultant, Data",SQL,Data,5,2026-Q3
+E0002,ليلى حداد,Payments,Senior engineer,Kubernetes,Cloud,1,2026-Q3
+E-0_3,Kai 🚀 Moana,Analytics,Engineer, Agile delivery ,Delivery, 3 ,2026-Q3
+,,,,,,,,

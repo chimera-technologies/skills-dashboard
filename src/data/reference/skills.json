@@ -1,0 +1,162 @@
+[
+  {
+    "skill": "Kubernetes",
+    "category": "Cloud"
+  },
+  {
+    "skill": "Terraform",
+    "category": "Cloud"
+  },
+  {
+    "skill": "Observability",
+    "category": "Cloud"
+  },
+  {
+    "skill": "AWS",
+    "category": "Cloud"
+  },
+  {
+    "skill": "Azure",
+    "category": "Cloud"
+  },
+  {
+    "skill": "Docker",
+    "category": "Cloud"
+  },
+  {
+    "skill": "Networking",
+    "category": "Cloud"
+  },
+  {
+    "skill": "CI/CD pipelines",
+    "category": "Cloud"
+  },
+  {
+    "skill": "SQL",
+    "category": "Data"
+  },
+  {
+    "skill": "Data modelling",
+    "category": "Data"
+  },
+  {
+    "skill": "Streaming data",
+    "category": "Data"
+  },
+  {
+    "skill": "Machine learning ops",
+    "category": "Data"
+  },
+  {
+    "skill": "Data visualisation",
+    "category": "Data"
+  },
+  {
+    "skill": "Spark",
+    "category": "Data"
+  },
+  {
+    "skill": "Data governance",
+    "category": "Data"
+  },
+  {
+    "skill": "Statistics",
+    "category": "Data"
+  },
+  {
+    "skill": "Python",
+    "category": "Development"
+  },
+  {
+    "skill": "Git",
+    "category": "Development"
+  },
+  {
+    "skill": "TypeScript",
+    "category": "Development"
+  },
+  {
+    "skill": "Testing strategy",
+    "category": "Development"
+  },
+  {
+    "skill": "REST API design",
+    "category": "Development"
+  },
+  {
+    "skill": "Rust",
+    "category": "Development"
+  },
+  {
+    "skill": "Go",
+    "category": "Development"
+  },
+  {
+    "skill": "Threat modelling",
+    "category": "Development"
+  },
+  {
+    "skill": "Agile delivery",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Accessibility testing",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Release management",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Estimation",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Product discovery",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Service design",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Quality assurance",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Risk management",
+    "category": "Delivery"
+  },
+  {
+    "skill": "Stakeholder management",
+    "category": "Leadership"
+  },
+  {
+    "skill": "Workshop facilitation",
+    "category": "Leadership"
+  },
+  {
+    "skill": "Pricing and bids",
+    "category": "Leadership"
+  },
+  {
+    "skill": "Coaching",
+    "category": "Leadership"
+  },
+  {
+    "skill": "People management",
+    "category": "Leadership"
+  },
+  {
+    "skill": "Strategy",
+    "category": "Leadership"
+  },
+  {
+    "skill": "Presenting",
+    "category": "Leadership"
+  },
+  {
+    "skill": "Hiring",
+    "category": "Leadership"
+  }
+]
