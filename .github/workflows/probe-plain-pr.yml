@@ -1,7 +1,6 @@
-name: probe plain
+name: probe plain pr
 on:
-  push:
-    branches: [ci-probe]
+  pull_request:
 permissions:
   contents: read
 jobs:
