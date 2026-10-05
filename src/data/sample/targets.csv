@@ -1,0 +1,157 @@
+team,skill,target_level
+Data Platform,REST API design,4
+Data Platform,Observability,2
+Data Platform,Accessibility testing,4
+Data Platform,CI/CD pipelines,4
+Data Platform,Estimation,2
+Data Platform,Networking,3
+Data Platform,Pricing and bids,2
+Data Platform,People management,4
+Data Platform,Workshop facilitation,3
+Data Platform,Docker,2
+Data Platform,Go,2
+Data Platform,Azure,2
+Data Platform,Threat modelling,4
+Data Platform,Data governance,4
+Data Platform,Kubernetes,4
+Payments,Agile delivery,2
+Payments,Product discovery,4
+Payments,Networking,3
+Payments,Threat modelling,2
+Payments,Observability,4
+Payments,Statistics,3
+Payments,REST API design,3
+Payments,Testing strategy,2
+Payments,Service design,3
+Payments,Data governance,3
+Payments,Accessibility testing,4
+Analytics,REST API design,2
+Analytics,Machine learning ops,2
+Analytics,Streaming data,2
+Analytics,Product discovery,3
+Analytics,Statistics,3
+Analytics,Data governance,2
+Analytics,Observability,2
+Analytics,Service design,2
+Analytics,Hiring,2
+Analytics,Risk management,2
+Analytics,Docker,3
+Analytics,Terraform,4
+Analytics,Testing strategy,4
+Analytics,Spark,3
+Analytics,Azure,2
+Analytics,Data modelling,3
+Cloud Operations,Agile delivery,3
+Cloud Operations,Accessibility testing,3
+Cloud Operations,Quality assurance,3
+Cloud Operations,Presenting,2
+Cloud Operations,Workshop facilitation,2
+Cloud Operations,Pricing and bids,3
+Cloud Operations,Estimation,3
+Cloud Operations,Networking,4
+Cloud Operations,Rust,2
+Cloud Operations,Azure,4
+Cloud Operations,Spark,4
+Cloud Operations,Threat modelling,3
+Cloud Operations,Terraform,3
+Cloud Operations,Data governance,3
+Cloud Operations,Testing strategy,4
+Cloud Operations,Statistics,2
+Web Apps,People management,2
+Web Apps,REST API design,3
+Web Apps,Data governance,3
+Web Apps,Threat modelling,3
+Web Apps,Data modelling,3
+Web Apps,Git,4
+Web Apps,Agile delivery,3
+Web Apps,Quality assurance,2
+Web Apps,Go,3
+Web Apps,Stakeholder management,2
+Mobile,Pricing and bids,4
+Mobile,Machine learning ops,4
+Mobile,Networking,2
+Mobile,Python,2
+Mobile,Accessibility testing,4
+Mobile,Workshop facilitation,3
+Mobile,People management,4
+Mobile,Data visualisation,3
+Mobile,Statistics,2
+Mobile,Risk management,4
+Mobile,Terraform,4
+Mobile,Quality assurance,3
+Mobile,Strategy,4
+Mobile,AWS,4
+Security,Estimation,4
+Security,Machine learning ops,4
+Security,Workshop facilitation,2
+Security,Terraform,4
+Security,Rust,2
+Security,Docker,4
+Security,CI/CD pipelines,4
+Security,Release management,3
+Security,Observability,2
+Security,Pricing and bids,3
+Security,SQL,2
+Security,Hiring,2
+Security,Testing strategy,3
+Security,Threat modelling,4
+Security,Networking,4
+Integration,Strategy,4
+Integration,Go,4
+Integration,AWS,4
+Integration,Hiring,2
+Integration,Machine learning ops,2
+Integration,Kubernetes,2
+Integration,Pricing and bids,2
+Integration,Presenting,3
+Integration,Testing strategy,4
+Integration,Product discovery,4
+Design Studio,People management,4
+Design Studio,Observability,2
+Design Studio,Python,2
+Design Studio,Machine learning ops,4
+Design Studio,Hiring,3
+Design Studio,Threat modelling,2
+Design Studio,Stakeholder management,2
+Design Studio,Rust,4
+Design Studio,Estimation,4
+Design Studio,Terraform,4
+Design Studio,Spark,2
+Design Studio,Networking,2
+Design Studio,SQL,2
+Design Studio,Data governance,4
+Delivery Office,Azure,3
+Delivery Office,Rust,3
+Delivery Office,Risk management,4
+Delivery Office,Machine learning ops,3
+Delivery Office,Agile delivery,2
+Delivery Office,Networking,4
+Delivery Office,Threat modelling,4
+Delivery Office,Coaching,3
+Delivery Office,Workshop facilitation,3
+Delivery Office,Streaming data,4
+Advisory,Data visualisation,2
+Advisory,Kubernetes,3
+Advisory,Product discovery,4
+Advisory,Pricing and bids,3
+Advisory,Go,4
+Advisory,People management,4
+Advisory,Terraform,4
+Advisory,CI/CD pipelines,2
+Advisory,Quality assurance,3
+Advisory,Networking,3
+Advisory,Presenting,4
+Advisory,Data governance,3
+Advisory,Data modelling,3
+Advisory,Workshop facilitation,3
+Platform Engineering,Hiring,4
+Platform Engineering,SQL,4
+Platform Engineering,Terraform,2
+Platform Engineering,Release management,2
+Platform Engineering,Streaming data,4
+Platform Engineering,Go,3
+Platform Engineering,Data visualisation,2
+Platform Engineering,Estimation,3
+Platform Engineering,People management,4
+Platform Engineering,Testing strategy,4
+Platform Engineering,Quality assurance,4

@@ -1,0 +1,15 @@
+employee_id,name,team,role,skill,category,level,quarter
+E0001,Asha Rao,Data Platform,Senior engineer,Python,Development,4,2026-Q3
+E0001,Asha Rao,Data Platform,Senior engineer,SQL,Data,0,2026-Q3
+E0001,Asha Rao,Data Platform,Senior engineer,Git,Development,6,2026-Q3
+E0001,Asha Rao,Data Platform,Senior engineer,TypeScript,Development,3.5,2026-Q3
+E0001,Asha Rao,Data Platform,Senior engineer,Rust,Development,four,2026-Q3
+E0002,Ben Osei,Data Platform,Engineer,Cobol,Development,3,2026-Q3
+E0002,Ben Osei,Atlantis,Engineer,Go,Development,3,2026-Q3
+E0002,Ben Osei,Data Platform,Engineer,SQL,Science,3,2026-Q3
+E0002,Ben Osei,Data Platform,Engineer,Python,Development,3,2026-Q2
+E0002,,Data Platform,Engineer,Kubernetes,Cloud,3,2026-Q3
+E0001,Asha Rao,Data Platform,Senior engineer,Python,Development,5,2026-Q3
+E0003,Chen Wei-Lin,Payments,Engineer,Python,Development,3,2026-Q3
+E0003,Chen Wei-Lin,Analytics,Engineer,SQL,Data,3,2026-Q3
+E0003,Chen Wei-Lin,Payments,Engineer,Kubernetes,Data,2,2026-Q3
