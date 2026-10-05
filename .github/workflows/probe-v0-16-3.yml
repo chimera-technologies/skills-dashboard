@@ -1,0 +1,13 @@
+name: probe v0.16.3
+on:
+  push:
+    branches: [ci-probe]
+permissions:
+  contents: read
+jobs:
+  probe:
+    if: false
+    uses: chimera-technologies/sdlc-marketplace/.github/workflows/sdlc-story-link.yml@v0.16.3
+    with:
+      sdlc_ref: v0.16.3
+      app_id: "1"
