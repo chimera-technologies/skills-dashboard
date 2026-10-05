@@ -1,0 +1,25 @@
+name: probe job spec-check
+on:
+  push:
+    branches: [ci-probe]
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  spec-check:
+    if: false
+    uses: chimera-technologies/sdlc-marketplace/.github/workflows/sdlc-spec-check.yml@v0.17.0
+    with:
+      sdlc_ref: v0.17.0
+      sdlc_repo: chimera-technologies/sdlc-marketplace
+      app_id: ${{ vars.SDLC_APP_ID }}
+      base_branch: main
+      jira_base_url: ${{ vars.JIRA_BASE_URL }}
+      jira_user_email: ${{ vars.JIRA_USER_EMAIL }}
+    secrets:
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      SDLC_APP_PRIVATE_KEY: ${{ secrets.SDLC_APP_PRIVATE_KEY }}
+      JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
