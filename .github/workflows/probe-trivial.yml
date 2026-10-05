@@ -1,0 +1,9 @@
+name: probe trivial
+on:
+  push:
+    branches: [ci-probe]
+permissions:
+  contents: read
+jobs:
+  probe:
+    uses: chimera-technologies/sdlc-marketplace/.github/workflows/probe-reusable.yml@probe/reusable
