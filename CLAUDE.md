@@ -13,7 +13,7 @@ This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at
 | UI design | automatic with the spec (HTML mockups); `/sdlc:design-ui` to redo them or refine them in Figma | `designs/<slug>/` | owner merges the spec PR (or a design PR) |
 | Build | automatic, one story at a time: a plan PR (reviewed for edge cases and bugs), then the build when it merges (`/sdlc:build-story <KEY>` to build by hand) | `plans/<slug>-s<n>.md`, then code and tests in the story PR | owner merges the plan PR; verifier PASS |
 | PR review | story PR opened or pushed | review comment, `review:*` label | `review-gate` passes |
-| Test | after the review gate | test results | `traceability`, `tests` pass; owner merges |
+| Test | after the review gate; a test-report PR after each story merges | test results, `test-reports/<plan-id>/` | `traceability`, `tests` pass; owner merges |
 
 - One artifact per PR on its own branch (`intent/`, `spec/`, `design/`,
   `plan/`, `story/`, `release/`; a spec PR also carries its UI mockups);

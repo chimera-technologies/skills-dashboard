@@ -114,6 +114,12 @@ jobs:
 
   tests:
     if: github.event_name == 'push'
+    permissions:
+      contents: read
+      actions: read
+      checks: read
+      issues: read
+      pull-requests: read
     uses: chimera-technologies/sdlc-marketplace/.github/workflows/sdlc-main-tests.yml@v0.18.0
     with:
       sdlc_ref: v0.18.0
