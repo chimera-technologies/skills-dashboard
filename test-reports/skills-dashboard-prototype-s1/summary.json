@@ -1,0 +1,9 @@
+{
+  "id": "skills-dashboard-prototype-s1",
+  "story": "S1",
+  "title": "App scaffold, toolchain and test harness",
+  "jira": "SCRUM-14",
+  "date": "2026-10-06",
+  "tests": 13,
+  "result": "pass"
+}

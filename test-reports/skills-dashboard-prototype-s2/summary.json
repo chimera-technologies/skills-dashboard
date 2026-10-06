@@ -1,0 +1,9 @@
+{
+  "id": "skills-dashboard-prototype-s2",
+  "story": "S2",
+  "title": "CSV loader, validation and sample data",
+  "jira": "SCRUM-15",
+  "date": "2026-10-06",
+  "tests": 26,
+  "result": "pass"
+}
