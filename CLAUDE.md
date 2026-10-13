@@ -3,7 +3,7 @@
 <!-- sdlc:begin -->
 ## SDLC loop (sdlc plugin)
 
-This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at `v0.18.0`
+This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at `v0.20.0`
 (set up with `/sdlc:init`; this block is regenerated, edit outside it).
 
 | Stage | Starts with | Produces | Gate |
@@ -25,6 +25,15 @@ This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at
   instructions. The agent that wrote a change never approves it.
 - Build: one story per session (`/clear` between stories); ask the graph
   (`graphify query`) before reading code; run one test file while iterating.
+- Reviewing an intent, spec or plan PR: edit it directly, or comment
+  `/sdlc revise <request>` and the bot makes the change on its branch.
+- Small fixes skip the full loop: `/sdlc:fix` (a `fix/<name>` branch, a test
+  first, then the review gate and the tests).
+- Code: reuse what `PATTERNS.md` names before writing anything new, and add
+  each new reusable piece to it; build UI from the `ui_library` in
+  `.sdlc/build.yaml`. The plugin's hooks block secrets, lock-file edits and
+  commands that change real environments, run `format_command` and
+  `lint_command` after each code write, and keep the Graphify graph current.
 - Big jobs run as Claude Code workflows (parallel agents, then skeptics):
   large requirement documents, large or high-risk specs, large story PRs.
   Setting: `workflows` in `.sdlc/sdlc.json` (`auto`; auto, always or off).
