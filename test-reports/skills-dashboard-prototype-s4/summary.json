@@ -1,0 +1,9 @@
+{
+  "id": "skills-dashboard-prototype-s4",
+  "story": "S4",
+  "title": "App shell: quarter selector, filters, tables and file loading",
+  "jira": "SCRUM-17",
+  "date": "2026-10-14",
+  "tests": 37,
+  "result": "pass"
+}
