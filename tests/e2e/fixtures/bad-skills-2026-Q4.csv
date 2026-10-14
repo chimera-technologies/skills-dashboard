@@ -1,0 +1,9 @@
+employee_id,name,team,role,skill,category,level,quarter
+E9001,Ada Fictional,Data Platform,Engineer,Kubernetes,Cloud,3,2026-Q4
+E9001,Ada Fictional,Data Platform,Engineer,Terraform,Cloud,3.5,2026-Q4
+E9002,Ben Example,Payments,Engineer,Underwater basket weaving,Cloud,2,2026-Q4
+E9003,Cleo Sample,Moon Base,Engineer,SQL,Data,2,2026-Q4
+E9004,Dev Placeholder,Payments,Engineer,SQL,Data,2,2026-Q3
+,Eve Madeup,Payments,Engineer,SQL,Data,2,2026-Q4
+E9001,Ada Fictional,Data Platform,Engineer,Kubernetes,Cloud,4,2026-Q4
+E9005,Fay Invented,Payments,Engineer,SQL,Data,3,2026-Q4

@@ -1,0 +1,5 @@
+employee_id,name,team,role,skill,category,level,quarter
+E9001,Ada Fictional,Data Platform,Engineer,Kubernetes,Cloud,3,2026-Q4
+E9001,Ada Fictional,Data Platform,Engineer,SQL,Data,4,2026-Q4
+E9002,Ben Example,Payments,Senior engineer,Kubernetes,Cloud,2,2026-Q4
+E9002,Ben Example,Payments,Senior engineer,SQL,Data,5,2026-Q4
