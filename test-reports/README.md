@@ -8,3 +8,4 @@ every test case and its status in each testing flow.
 | [S1: App scaffold, toolchain and test harness](skills-dashboard-prototype-s1/README.md) | SCRUM-14 | 13 | ✅ pass | 2026-10-06 |
 | [S2: CSV loader, validation and sample data](skills-dashboard-prototype-s2/README.md) | SCRUM-15 | 26 | ✅ pass | 2026-10-06 |
 | [S3: Metrics and definitions](skills-dashboard-prototype-s3/README.md) | SCRUM-16 | 16 | ✅ pass | 2026-10-07 |
+| [S4: App shell: quarter selector, filters, tables and file loading](skills-dashboard-prototype-s4/README.md) | SCRUM-17 | 37 | ✅ pass | 2026-10-14 |
