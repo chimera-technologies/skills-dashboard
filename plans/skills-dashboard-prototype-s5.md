@@ -48,11 +48,11 @@ REQ-10.
 | src/data/format.ts | new, pure: `formatLevel(n \| null)` ("3.0", or "–" for null) and `changeText(change)` ("▲ Up 0.2", "▼ Down 0.1", "● Unchanged", "Not enough data"); difference shown as its absolute value to one decimal. `deltaText(delta: number \| null, prev: string)`: delta > 0 "+4 since 2026-Q2", delta < 0 "−3 since 2026-Q2" (U+2212 minus, never "+-3"), 0 "Unchanged", null "2026-Q2 not loaded". `countText(n, one, many)`: "1 category", "0 categories", "5 categories". Reusable by S6 and S8 for every level, change, delta and count cell |
 | src/screens/Overview.tsx | changed: the whole S5 body. Reads `useData()` (`dataset`, `selectedQuarter`, `sources`) and `useRoute().filters`; `useMemo(() => overviewFor(...), [ratings, previousRatings, filters])`; previous ratings from `dataset.quarters.get(previousQuarter(selectedQuarter))` (calendar quarter before, spec Design). Subtitle reads both sources, `sources.get(q)` and `sources.get(prev)`: when they are the same (or the previous quarter is not loaded) it is the mockup's "{q}, compared with {prev} · {source}"; when they differ it names each, "{q} ({source q}), compared with {prev} ({source prev})", followed by a muted line "The two quarters come from different sources; changes compare them as loaded" (EC-1). Stat-card sub-lines use `deltaText` (People, Teams) and `countText(categories, 'category', 'categories')` (Skills assessed) (EC-2). Renders four stat cards and three `DataTable`s with captions "Top 10 skills in {q}", "Bottom 10 skills in {q}", "Average per category, {q} against {prev}" (the visible card heading is an `h3`; the caption is visually hidden but read by screen readers). Top table `initialSort: { key: 'average', dir: 'descending' }`, bottom table `{ key: 'average', dir: 'ascending' }`; the `average` column's `value` is the number (not the formatted string), and `DataTable`'s stable sort keeps `overviewFor`'s A–Z tie order (BUG-1). Category table columns have fixed keys `category`, `current`, `previous`, `change`; only their `header` text carries the quarter names, so a sort survives a quarter switch (EC-3). File names `top-10-skills-{q}.csv`, `bottom-10-skills-{q}.csv`, `category-averages-{q}.csv`. Category names in the category table are links to `hrefFor('overview', null, { ...filters, category: [name] })` so a category filter can be applied from the screen (it then shows as a chip and "Clear all" removes it) |
 | src/app/DataTable.tsx | changed: `Column.csv?: false` leaves a column out of the export (the decorative Bar column); everything else unchanged |
-| src/index.css | changed: `.page-title`, `.stats` (4-column grid, 2 columns under 1100 px), `.stat`, `.stat-value`, `.cards` (`repeat(auto-fit, minmax(300px, 1fr))`), `.card`, `.bar` / `.bar-low` (width set inline as a % of 5), `.change-up` / `.change-down` / `.change-same`, `.visually-hidden` |
+| src/index.css | changed: `.page-title`, `.stats` (4-column grid, 2 columns under 1100 px), `.stat`, `.stat-value`, `.cards` (3 equal columns, `repeat(2, minmax(0, 1fr))` under 1100 px so 1024 px gives two columns, EC-4), `.card` (`min-width: 0`, wide tables scroll inside the card with `overflow-x: auto`, never the page), `.bar` / `.bar-low` (width set inline as a % of 5), `.change-up` / `.change-down` / `.change-same`, `.visually-hidden` |
 | tests/unit/overview-data.test.ts | new: pure tests of `overviewFor`, `matchesFilters`, `formatLevel`, `changeText` against small fixtures and the bundled sample data |
 | tests/unit/overview.test.tsx | new: component tests through `renderShell('#/')` (real store with the sample data) and the quarter selector |
 | tests/unit/DataTable.test.tsx | changed: one test that a `csv: false` column is shown but not exported |
-| tests/e2e/overview.spec.ts | new: overview in the three engines at 1024 px: headline numbers, lists, category change, filter chip from a category link, CSV download matching the table, axe with no violations, keyboard reach |
+| tests/e2e/overview.spec.ts | new: overview in the three engines at 1024 px: headline numbers, lists, category change, filter chip from a category link, CSV download matching the table, axe with no violations, keyboard reach, and at 1024x768 no horizontal page scroll with the three cards in two columns (EC-4) |
 | PATTERNS.md | changed: add `matchesFilters`, `formatLevel` / `changeText` / `deltaText` / `countText`, fixed column keys for quarter columns, `Column.csv: false`, and the `.card` / `.stats` classes |
 
 ## Tests
@@ -139,6 +139,11 @@ what the screen shows. They do not hard-code the mockup's 302 / 12 / 40.
 - Rendered order of the top and bottom tables (the `initialSort` re-sorts
   them): checked on the screen, not only in `overviewFor`
   (tests/unit/overview.test.tsx › "S5 BUG-1: ...").
+- Narrow window, 1024 px wide (design rule: the three cards wrap to two
+  columns, never overflow sideways): `.cards` drops to two columns under
+  1100 px and each `.card` has `min-width: 0` with its table scrolling inside
+  the card, so the page never scrolls horizontally (tests/e2e/overview.spec.ts
+  › "S5 EC-4: ...").
 
 ## Review findings
 | ID | Finding | Handling | Test |
@@ -147,6 +152,7 @@ what the screen shows. They do not hard-code the mockup's 302 / 12 / 40.
 | EC-2 | Stat-card sub-lines were only specified for the mockup's values; a negative delta would read "+-3" and counts of 1 and 0 would read "1 categories". | `deltaText` and `countText` in src/data/format.ts: "−3 since {prev}", "Unchanged", "+4 since {prev}", "{prev} not loaded"; "1 category", "0 categories". Rendered through Overview.tsx. | tests/unit/overview-data.test.ts › "S5 EC-2: delta and count text for negative, zero, positive, 0, 1 and many"; tests/unit/overview.test.tsx › "S5 EC-2: sub-lines for fewer people, a category link and filters matching nothing" |
 | EC-3 | A sort on a category column keyed by quarter name is silently dropped when the quarter selector changes. | Category table columns use fixed keys `category`, `current`, `previous`, `change`; only the header text names the quarter. | tests/unit/overview.test.tsx › "S5 EC-3: sort on the current-quarter column survives a quarter switch" |
 | BUG-1 | AC-2 ordering was only checked in `overviewFor`; the tables' `initialSort` re-sorts the rendered rows and could reverse them or sort formatted strings. | Top `initialSort` average descending, bottom average ascending, `average` column value is the number; stable sort keeps A–Z ties. The screen test reads the rendered rows. | tests/unit/overview.test.tsx › "S5 BUG-1: rendered top and bottom tables are ordered by level, ties A–Z, ranks 1..n, aria-sort matches the arrow" |
+| EC-4 | The design rule "at 1024 px the three cards wrap to two columns, never overflow sideways" had no check; with `auto-fit, minmax(300px, 1fr)` three cards still fit in one row at 1024 px, and a wide table could push the page sideways. | `.cards` is three columns, two under 1100 px; `.card` has `min-width: 0` and its table scrolls inside the card. The e2e test runs at 1024x768 in all three engines. | tests/e2e/overview.spec.ts › "S5 EC-4: at 1024x768 the page has no horizontal scroll and the three cards sit in two columns" |
 
 ## Steps
 1. Write tests/unit/overview-data.test.ts (AC-2, AC-3, filters, edge cases)
@@ -169,8 +175,11 @@ what the screen shows. They do not hard-code the mockup's 302 / 12 / 40.
    token variables. Run until green.
 5. Write tests/e2e/overview.spec.ts (AC-1, AC-3, CSV download of the
    category table compared with the visible rows, axe, keyboard Tab to each
-   Download CSV button and category link, `guardOrigin`); run it in the
-   three engines at 1024 px.
+   Download CSV button and category link, `guardOrigin`, and EC-4: at a
+   1024x768 viewport `document.documentElement.scrollWidth` equals the
+   viewport width and the three cards' bounding boxes give two distinct
+   `x` positions, the third card below the first); run it in the three
+   engines at 1024 px.
 6. Screenshot the overview at 1280×800 and 1024×800 into `test-results/`,
    compare with designs/skills-dashboard-prototype/screens/overview.png and
    fix layout, copy and colour differences.
