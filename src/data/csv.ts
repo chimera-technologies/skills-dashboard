@@ -65,3 +65,30 @@ export function parseCsv(text: string): CsvResult {
   endRecord();
   return { ok: true, records };
 }
+
+export type CsvCell = string | number | null;
+
+const FORMULA_START = /^[=+\-@\t\r]/;
+const PLAIN_NUMBER = /^-?\d+(\.\d+)?$/;
+const NEEDS_QUOTES = /[",\r\n]/;
+
+// Spreadsheet formula injection: a cell starting with = + - @ tab or CR gets a leading ' (plain numbers excepted).
+function exportCell(value: CsvCell): string {
+  if (value === null) return '';
+  const s = String(value);
+  return FORMULA_START.test(s) && !PLAIN_NUMBER.test(s) ? `'${s}` : s;
+}
+
+// RFC 4180 writer with CRLF line ends; every cell, header included, goes through exportCell.
+export function toCsv(rows: CsvCell[][]): string {
+  return rows
+    .map((row) =>
+      row
+        .map((value) => {
+          const s = exportCell(value);
+          return NEEDS_QUOTES.test(s) ? `"${s.replaceAll('"', '""')}"` : s;
+        })
+        .join(',') + '\r\n',
+    )
+    .join('');
+}
