@@ -10,6 +10,7 @@ graphify-out/
 node_modules/
 dist/
 test-results/
+.sdlc-results/
 playwright-report/
 blob-report/
 .screenshots/

@@ -10,8 +10,12 @@ export default defineConfig({
   testDir: 'tests/e2e',
   testMatch,
   forbidOnly: !!process.env.CI,
-  reporter: 'line',
-  use: { baseURL: `http://localhost:${port}` },
+  // Full runs also write per-test results (JUnit, with screenshots as attachments) for the
+  // SDLC test report and Xray, and the HTML report CI uploads (report_path).
+  reporter: process.env.TEST_FILE
+    ? 'line'
+    : [['line'], ['junit', { outputFile: '.sdlc-results/junit-e2e.xml' }], ['html', { open: 'never' }]],
+  use: { baseURL: `http://localhost:${port}`, screenshot: 'on' },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'], viewport } },
     { name: 'firefox', use: { ...devices['Desktop Firefox'], viewport } },
