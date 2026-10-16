@@ -3,7 +3,7 @@
 <!-- sdlc:begin -->
 ## SDLC loop (sdlc plugin)
 
-This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at `v0.22.0`
+This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at `v0.23.0`
 (set up with `/sdlc:init`; this block is regenerated, edit outside it).
 
 | Stage | Starts with | Produces | Gate |
@@ -32,6 +32,9 @@ This repo uses the `sdlc` plugin from `chimera-technologies/sdlc-marketplace` at
 - A story PR whose tests fail goes back to Build by itself: the bot pushes a
   fix to the same PR (`autofix:` commits, at most `autofix_attempts`), then
   asks a person.
+- The review gate posts each high and medium finding as a PR comment. The
+  reviewer answers it: `/sdlc fix <n> [how]` (the bot fixes it on the branch)
+  or `/sdlc dismiss <n> <reason>` (the next review does not report it).
 - Code: reuse what `PATTERNS.md` names before writing anything new, and add
   each new reusable piece to it; build UI from the `ui_library` in
   `.sdlc/build.yaml`. The plugin's hooks block secrets, lock-file edits and
