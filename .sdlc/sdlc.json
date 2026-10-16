@@ -1,6 +1,6 @@
 {
   "sdlc_repo": "chimera-technologies/sdlc-marketplace",
-  "sdlc_ref": "v0.20.0",
+  "sdlc_ref": "v0.22.0",
   "base_branch": "main",
   "maintain_cron": "17 * * * *",
   "stages": {
@@ -14,6 +14,7 @@
     "maintain": false
   },
   "auto_build": true,
+  "autofix_attempts": 2,
   "workflows": "auto",
   "models": {
     "intake": "claude-sonnet-5",
@@ -38,7 +39,8 @@
       "review": 10,
       "advisory": 5,
       "revise": 10,
-      "prescreen": 10
+      "prescreen": 10,
+      "autofix": 20
     },
     "monthly_usd": 0
   }
