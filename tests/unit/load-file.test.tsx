@@ -111,8 +111,12 @@ describe('S4 load-file flow', () => {
     expect(text.length).toBeLessThanOrEqual(5 * 1024 * 1024);
     const dialog = await dialogFor(csvFile('huge.csv', text));
     const shown = () => dialog.querySelectorAll('tbody tr');
-    expect(shown()).toHaveLength(500);
-    expect(within(dialog).getByText(`Listing 500 of ${count.toLocaleString('en')} rows…`)).toBeTruthy();
+    // The first 500 rows come with the dialog; 2,000 more are added each animation frame,
+    // so a frame may already have run by now. Check the first batch, not an exact count.
+    const first = shown().length;
+    expect(first).toBeGreaterThanOrEqual(500);
+    expect(first).toBeLessThan(count);
+    expect(within(dialog).getByText(`Listing ${first.toLocaleString('en')} of ${count.toLocaleString('en')} rows…`)).toBeTruthy();
     expect(document.activeElement).toBe(within(dialog).getByRole('button', { name: 'Close' }));
     await waitFor(() => expect(shown()).toHaveLength(count), { timeout: 240_000, interval: 500 });
     expect(dialog.textContent).not.toContain('Listing');
