@@ -1,6 +1,6 @@
 {
   "sdlc_repo": "chimera-technologies/sdlc-marketplace",
-  "sdlc_ref": "v0.22.0",
+  "sdlc_ref": "v0.23.0",
   "base_branch": "main",
   "maintain_cron": "17 * * * *",
   "stages": {
@@ -40,7 +40,8 @@
       "advisory": 5,
       "revise": 10,
       "prescreen": 10,
-      "autofix": 20
+      "autofix": 20,
+      "review-fix": 20
     },
     "monthly_usd": 0
   }
