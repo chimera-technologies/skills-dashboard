@@ -98,4 +98,12 @@ describe('S4 shared table', () => {
     expect(container.querySelector('img')).toBeNull();
     expect(screen.getByText('<img src=x onerror=alert(1)>')).toBeTruthy();
   });
+
+  it('S5 EC: a csv: false column is shown but not exported', async () => {
+    const withBar: Column<Row>[] = [...columns, { key: 'bar', header: 'Bar', value: (r) => r.level, render: () => '■', csv: false }];
+    render(<DataTable caption="T" columns={withBar} rows={rows.slice(0, 1)} fileName="t.csv" />);
+    expect(screen.getByRole('columnheader', { name: 'Bar' })).toBeTruthy();
+    expect(bodyText()[0][3]).toBe('■');
+    expect(await downloaded()).toEqual([['Name', 'Level', 'Change'], ["'=SUM(A1)", '3', '0.2']]);
+  });
 });
