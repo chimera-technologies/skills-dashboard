@@ -12,6 +12,8 @@ install_command: npm ci && npx playwright install --with-deps
 test_command: npm test && npm run test:e2e
 test_file_command: npm run test:file -- {file} # {file} = one test file
 report_path: playwright-report/
+results_path: .sdlc-results/*.xml    # JUnit XML the tests write: per-test results, Xray
+evidence_path: test-results/         # screenshots the browser tests save
 
 # Token-saving tools the Build preflight installs and wires up (pinned).
 graphify_version: 0.9.71
