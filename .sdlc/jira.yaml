@@ -9,3 +9,12 @@ story_issue_type: Story
 # Label on Epics created with an intent. Deliberately NOT "intent": that
 # label starts the Jira Automation intake, which would draft a duplicate.
 created_label: intent-created
+# The story's status at each stage: the bot moves it there when the stage
+# starts (and back to In Progress when a check fails or a fix is asked for).
+# Each status must exist in the space's Jira workflow; a missing one is skipped.
+status_planning: In Planning
+status_in_progress: In Progress
+status_dev_complete: Dev Completed
+status_in_qa: In QA
+status_in_review: In Review
+status_done: Done
