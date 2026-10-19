@@ -41,7 +41,7 @@ One entry per pattern: what to use, where it lives, and when.
 - `Column.csv: false` keeps a decorative column (a bar) on screen but out of the download.
 - Columns named after a quarter: give them fixed keys (`current`, `previous`) and put the quarter only in `header`, so a sort survives a quarter switch.
 - Text for numbers: `formatLevel` ("3.0", "–"), `changeText` ("▲ Up 0.2", "▼ Down 0.1", "● Unchanged", "Not enough data"), `deltaText` ("+4 since 2026-Q2", "−3 ...", "Unchanged", "2025-Q3 not loaded"), `countText(n, one, many)` in `src/data/format.ts`. Colour a change with `.change-up` / `.change-down` / `.change-same`, always next to that text.
-- Screen layout classes: `.page-title` (h2 + muted subtitle), `.stats` / `.stat` (`.stat-label`, `.stat-value`, `.stat-sub`), `.cards` / `.card` (a surface card; a `DataTable` inside gets its Download CSV top right and a visually hidden caption, wide tables scroll inside the card), `.bar` / `.bar-low`, `.visually-hidden`.
+- Screen layout classes: `.page-title` (h2 + muted subtitle), `.stats` / `.stat` (`.stat-label`, `.stat-value`, `.stat-sub`), `.cards` / `.card` (a surface card; a `DataTable` inside gets its Download CSV top right and a visually hidden caption, wide tables scroll inside the card), `.bar` / `.bar-low` (inside a 100 px `.bar-track`, width inline as `${level / 5 * 100}%`), `.row-link` (a link that reads as a muted bold row label, underline on hover/focus), `.visually-hidden`.
 - Modals: native `<dialog>` with `showModal()` in an effect, focus moved explicitly, opener refocused on `close` (see `LoadErrorsDialog`).
 
 ## State and configuration

@@ -81,7 +81,11 @@ describe('S5 organisation overview', () => {
       for (const tr of rows) {
         const cells = within(tr).getAllByRole('cell');
         expect(cells[2].textContent).toMatch(/^\d\.\d$/);
-        expect(cells[3].querySelector('.bar[aria-hidden="true"]')).toBeTruthy();
+        const bar = cells[3].querySelector<HTMLElement>('.bar-track > .bar[aria-hidden="true"]');
+        expect(bar).toBeTruthy();
+        // width is the average as a % of 5 (the shown level is rounded to 0.1, so within 1%)
+        expect(bar!.style.width).toMatch(/%$/);
+        expect(Math.abs(parseFloat(bar!.style.width) - Number(cells[2].textContent) * 20)).toBeLessThanOrEqual(1);
       }
     }
     expect(screen.getByRole('heading', { level: 3, name: 'Top 10 skills' })).toBeTruthy();
@@ -157,6 +161,7 @@ describe('S5 organisation overview', () => {
     select('2026-Q2');
     const link = within(table(/^Average per category/)).getByRole('link', { name: 'Data' });
     expect(link.getAttribute('href')).toBe('#/?category=Data');
+    expect(link.className).toBe('row-link'); // styled as a row label, not an accent link
     go('#/?category=Data');
     expect(stat('Skills assessed')[1]).toBe('1 category');
     expect(rowsOf(table(/^Average per category/)).map((r) => r[0])).toEqual(['Data']);

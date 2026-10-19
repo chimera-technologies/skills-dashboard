@@ -169,7 +169,10 @@ dialog.load-errors::backdrop { background: rgba(29, 37, 34, 0.55); }
 .card-sub { font-size: 13px; font-weight: 600; color: var(--color-muted); margin-bottom: var(--space); }
 .card td { vertical-align: middle; }
 .footnote { margin-top: calc(var(--space) * 1.5); }
-.bar { display: inline-block; height: 10px; min-width: 2px; border-radius: 2px; background: var(--color-accent); }
+.bar-track { display: inline-block; width: 100px; vertical-align: middle; }
+.row-link { color: var(--color-muted); font-weight: 600; text-decoration: none; }
+.row-link:hover, .row-link:focus-visible { text-decoration: underline; }
+.bar { display: block; height: 10px; min-width: 2px; border-radius: 2px; background: var(--color-accent); }
 .bar-low { background: var(--color-warn); }
 .change-up, .change-down { font-weight: 600; white-space: nowrap; }
 .change-up { color: var(--color-accent); }

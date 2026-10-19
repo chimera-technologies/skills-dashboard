@@ -22,8 +22,12 @@ function skillColumns(barClass: string): Column<SkillRow>[] {
       key: 'bar',
       header: 'Bar',
       value: (r) => r.average,
-      // 80 px at level 5
-      render: (r) => <span className={barClass} style={{ width: r.average * 16 }} aria-hidden="true" />,
+      // % of the 0–5 scale, inside a fixed track
+      render: (r) => (
+        <span className="bar-track">
+          <span className={barClass} style={{ width: `${(r.average / 5) * 100}%` }} aria-hidden="true" />
+        </span>
+      ),
       csv: false,
     },
   ];
@@ -57,7 +61,7 @@ export default function Overview() {
         key: 'category',
         header: 'Category',
         value: (r) => r.category,
-        render: (r) => <a href={hrefFor('overview', null, { ...filters, category: [r.category] })}>{r.category}</a>,
+        render: (r) => <a className="row-link" href={hrefFor('overview', null, { ...filters, category: [r.category] })}>{r.category}</a>,
         sortable: true,
       },
       { key: 'current', header: q, value: (r) => r.current, render: (r) => formatLevel(r.current), sortable: true, align: 'right' },
