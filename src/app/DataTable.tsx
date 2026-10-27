@@ -9,6 +9,7 @@ export type Column<T> = {
   render?: (row: T) => ReactNode; // what is shown, if not the value
   sortable?: boolean;
   align?: 'left' | 'right';
+  csv?: false; // shown but left out of the download (decorative columns)
 };
 
 export type Sort = { key: string; dir: 'ascending' | 'descending' };
@@ -40,7 +41,10 @@ export default function DataTable<T>({ caption, columns, rows, initialSort, file
 
   const toggle = (key: string) =>
     setSort((s) => ({ key, dir: s?.key === key && s.dir === 'ascending' ? 'descending' : 'ascending' }));
-  const download = () => downloadCsv(fileName, [columns.map((c) => c.header), ...sorted.map((row) => columns.map((c) => c.value(row)))]);
+  const download = () => {
+    const out = columns.filter((c) => c.csv !== false);
+    downloadCsv(fileName, [out.map((c) => c.header), ...sorted.map((row) => out.map((c) => c.value(row)))]);
+  };
   const n = rows.length;
 
   return (

@@ -147,3 +147,37 @@ dialog.load-errors::backdrop { background: rgba(29, 37, 34, 0.55); }
 .muted { color: var(--color-muted); font-size: 13px; }
 .dlg-foot { display: flex; align-items: center; gap: 12px; padding: 12px 24px 20px; }
 .dlg-foot .muted { margin-right: auto; }
+
+/* overview: cards wrap to two columns under 1100 px; wide tables scroll inside the card, never the page */
+.page-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px calc(var(--space) * 2); margin-bottom: calc(var(--space) * 2); }
+.page-title p { margin: 0; color: var(--color-muted); }
+.stats, .cards { display: grid; gap: calc(var(--space) * 2); margin-bottom: calc(var(--space) * 2); }
+.stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.cards { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; }
+@media (max-width: 1100px) {
+  .stats, .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.stat, .card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: calc(var(--space) * 2); min-width: 0; }
+.stat-label { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--color-muted); }
+.stat-value { font-size: 28px; line-height: 36px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat-sub { font-size: 13px; color: var(--color-muted); }
+.card { position: relative; overflow-x: auto; }
+.card h3 { font-size: 16px; line-height: 22px; margin-bottom: var(--space); padding-right: 180px; }
+.card th { white-space: nowrap; }
+.card th, .card td { padding: 6px 8px; }
+.card .table-tools { position: absolute; top: calc(var(--space) * 2); right: calc(var(--space) * 2); margin: 0; }
+.card-sub { font-size: 13px; font-weight: 600; color: var(--color-muted); margin-bottom: var(--space); }
+.card td { vertical-align: middle; }
+.footnote { margin-top: calc(var(--space) * 1.5); }
+.bar-track { display: inline-block; width: 100px; vertical-align: middle; }
+.row-link { color: var(--color-muted); font-weight: 600; text-decoration: none; }
+.row-link:hover, .row-link:focus-visible { text-decoration: underline; }
+.bar { display: block; height: 10px; min-width: 2px; border-radius: 2px; background: var(--color-accent); }
+.bar-low { background: var(--color-warn); }
+.change-up, .change-down { font-weight: 600; white-space: nowrap; }
+.change-up { color: var(--color-accent); }
+.change-down { color: var(--color-warn); }
+.change-same { color: var(--color-muted); white-space: nowrap; }
+.card caption, .visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
