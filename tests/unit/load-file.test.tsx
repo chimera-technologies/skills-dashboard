@@ -18,9 +18,9 @@ afterEach(() => {
 const SAMPLE_OPTIONS = ['2026-Q3 (latest)', '2026-Q2', '2026-Q1', '2025-Q4'];
 const UTF8_REASON = 'The file must be saved as CSV UTF-8 (in Excel: Save As › CSV UTF-8). It was not loaded.';
 
-async function dialogFor(file: File, label: 'Quarter file' | 'Target file' = 'Quarter file') {
+async function dialogFor(file: File, label: 'Quarter file' | 'Target file' = 'Quarter file', timeout?: number) {
   pick(label, file);
-  return screen.findByRole('dialog');
+  return screen.findByRole('dialog', {}, { timeout });
 }
 const close = (dialog: HTMLElement) => fireEvent.click(within(dialog).getByRole('button', { name: 'Close' }));
 async function csvOf(download: { blob: Blob }) {
@@ -109,7 +109,8 @@ describe('S4 load-file flow', () => {
     const count = Math.floor((5 * 1024 * 1024 - HEADER.length) / (line.length + 1));
     const text = [HEADER, ...Array.from({ length: count }, () => line)].join('\n');
     expect(text.length).toBeLessThanOrEqual(5 * 1024 * 1024);
-    const dialog = await dialogFor(csvFile('huge.csv', text));
+    // Reading and checking 5 MB can take well over findByRole's 1 s default on a slow CI runner.
+    const dialog = await dialogFor(csvFile('huge.csv', text), 'Quarter file', 30_000);
     const shown = () => dialog.querySelectorAll('tbody tr');
     // The first 500 rows come with the dialog; 2,000 more are added each animation frame,
     // so a frame may already have run by now. Check the first batch, not an exact count.
